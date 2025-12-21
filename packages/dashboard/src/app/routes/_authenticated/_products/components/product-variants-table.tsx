@@ -4,7 +4,6 @@ import {
     PaginatedListDataTable,
     PaginatedListRefresherRegisterFn,
 } from '@/vdb/components/shared/paginated-list-data-table.js';
-import { StockLevelLabel } from '@/vdb/components/shared/stock-level-label.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
 import { usePage } from '@/vdb/hooks/use-page.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
@@ -57,7 +56,6 @@ export function ProductVariantsTable({
                 enabled: true,
                 price: true,
                 priceWithTax: true,
-                stockLevels: true,
             }}
             bulkActions={[
                 [
@@ -108,9 +106,6 @@ export function ProductVariantsTable({
                     cell: ({ row: { original } }) => (
                         <Money value={original.priceWithTax} currency={original.currencyCode} />
                     ),
-                },
-                stockLevels: {
-                    cell: ({ row: { original } }) => <StockLevelLabel stockLevels={original.stockLevels} />,
                 },
             }}
             page={page}

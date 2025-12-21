@@ -22,11 +22,6 @@ export const productVariantListDocument = graphql(
                         id
                         name
                     }
-                    stockLevels {
-                        id
-                        stockOnHand
-                        stockAllocated
-                    }
                     customFields
                 }
                 totalItems
@@ -118,33 +113,12 @@ export const productVariantDetailDocument = graphql(
                     ...ProductVariantPrice
                 }
                 trackInventory
-                outOfStockThreshold
-                useGlobalOutOfStockThreshold
-                stockLevels {
-                    id
-                    stockOnHand
-                    stockAllocated
-                    stockLocation {
-                        id
-                        name
-                    }
-                }
                 customFields
             }
         }
     `,
     [assetFragment, productVariantPriceFragment],
 );
-
-export const productVariantGlobalSettingsDocument = graphql(`
-    query ProductVariantGlobalStockSettings {
-        globalSettings {
-            id
-            trackInventory
-            outOfStockThreshold
-        }
-    }
-`);
 
 export const createProductOptionDocument = graphql(`
     mutation CreateProductVariantOption($input: CreateProductOptionInput!) {
