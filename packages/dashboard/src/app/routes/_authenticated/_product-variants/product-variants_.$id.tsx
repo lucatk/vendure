@@ -111,12 +111,6 @@ function ProductVariantDetailPage() {
                 price: entity.price,
                 prices: entity.prices,
                 trackInventory: entity.trackInventory,
-                outOfStockThreshold: entity.outOfStockThreshold,
-                useGlobalOutOfStockThreshold: entity.useGlobalOutOfStockThreshold,
-                stockLevels: entity.stockLevels.map(stockLevel => ({
-                    stockOnHand: stockLevel.stockOnHand,
-                    stockLocationId: stockLevel.stockLocation.id,
-                })),
                 translations: entity.translations.map(translation => ({
                     id: translation.id,
                     languageCode: translation.languageCode,
@@ -373,119 +367,6 @@ function ProductVariantDetailPage() {
                             unusedCurrencies={unusedCurrencies}
                         />
                     ) : null}
-                </PageBlock>
-                <PageBlock column="main" blockId="stock" title={<Trans>Stock</Trans>}>
-                    <DetailFormGrid>
-                        <FormFieldWrapper
-                            control={form.control}
-                            name="trackInventory"
-                            label={<Trans>Stock levels</Trans>}
-                            renderFormControl={false}
-                            render={({ field }) => (
-                                <Select
-                                    items={{
-                                        INHERIT: t`Inherit from global settings`,
-                                        TRUE: t`Track`,
-                                        FALSE: t`Do not track`,
-                                    }}
-                                    onValueChange={val => {
-                                        if (val) {
-                                            field.onChange(val);
-                                        }
-                                    }}
-                                    value={field.value}
-                                >
-                                    <SelectTrigger className="">
-                                        <SelectValue placeholder="Track inventory" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="INHERIT">
-                                            <Trans>Inherit from global settings</Trans>
-                                        </SelectItem>
-                                        <SelectItem value="TRUE">
-                                            <Trans>Track</Trans>
-                                        </SelectItem>
-                                        <SelectItem value="FALSE">
-                                            <Trans>Do not track</Trans>
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            )}
-                        />
-                        <FormFieldWrapper
-                            control={form.control}
-                            name="outOfStockThreshold"
-                            label={<Trans>Out-of-stock threshold</Trans>}
-                            description={
-                                <Trans>
-                                    Sets the stock level at which this variant is considered to be out of
-                                    stock. Using a negative value enables backorder support.
-                                </Trans>
-                            }
-                            render={({ field }) => (
-                                <Input
-                                    type="number"
-                                    value={field.value}
-                                    onChange={e => field.onChange(e.target.valueAsNumber)}
-                                />
-                            )}
-                        />
-                        <FormFieldWrapper
-                            control={form.control}
-                            name="useGlobalOutOfStockThreshold"
-                            label={<Trans>Use global out-of-stock threshold</Trans>}
-                            description={
-                                <Trans>
-                                    Sets the stock level at which this variant is considered to be out of
-                                    stock. Using a negative value enables backorder support.
-                                </Trans>
-                            }
-                            render={({ field }) => (
-                                <Switch checked={field.value} onCheckedChange={field.onChange} />
-                            )}
-                        />
-                    </DetailFormGrid>
-                    {stockLevels?.map((stockLevel, index) => {
-                        const stockAllocated =
-                            entity?.stockLevels.find(sl => sl.stockLocation.id === stockLevel.stockLocationId)
-                                ?.stockAllocated ?? 0;
-                        const stockLocationName = stockLocationsData?.stockLocations.items?.find(
-                            sl => sl.id === stockLevel.stockLocationId,
-                        )?.name;
-                        const stockLocationNameLabel =
-                            stockLevels.length > 1 ? (
-                                <div className="text-muted-foreground">{stockLocationName}</div>
-                            ) : null;
-                        const stockLabel = (
-                            <>
-                                <Trans>Stock level</Trans>
-                                {stockLocationNameLabel}
-                            </>
-                        );
-                        return (
-                            <DetailFormGrid key={stockLevel.stockLocationId}>
-                                <FormFieldWrapper
-                                    control={form.control}
-                                    name={`stockLevels.${index}.stockOnHand`}
-                                    label={stockLabel}
-                                    render={({ field }) => <NumberInput {...field} value={field.value} />}
-                                />
-                                <div>
-                                    <Field>
-                                        <FieldLabel>
-                                            <Trans>Allocated</Trans>
-                                        </FieldLabel>
-                                        <div className="text-sm pt-1.5">{stockAllocated}</div>
-                                    </Field>
-                                </div>
-                            </DetailFormGrid>
-                        );
-                    })}
-                    <AddStockLocationDropdown
-                        availableStockLocations={stockLocationsData?.stockLocations.items ?? []}
-                        usedStockLocationIds={usedStockLocationIds}
-                        onStockLocationSelect={handleAddStockLocation}
-                    />
                 </PageBlock>
 
                 <PageBlock column="side" blockId="facet-values" title={<Trans>Facet Values</Trans>}>

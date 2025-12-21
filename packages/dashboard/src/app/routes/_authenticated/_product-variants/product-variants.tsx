@@ -66,9 +66,6 @@ function ProductListPage() {
                         <Money value={original.priceWithTax} currency={original.currencyCode} />
                     ),
                 },
-                stockLevels: {
-                    cell: ({ row: { original } }) => <StockLevelLabel stockLevels={original.stockLevels} />,
-                },
             }}
             additionalColumns={{
                 facetValueId: {

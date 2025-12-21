@@ -18,11 +18,6 @@ export const productVariantListDocument = graphql(
                     currencyCode
                     price
                     priceWithTax
-                    stockLevels {
-                        id
-                        stockOnHand
-                        stockAllocated
-                    }
                     customFields
                 }
                 totalItems
@@ -96,17 +91,6 @@ export const productVariantDetailDocument = graphql(
                     ...ProductVariantPrice
                 }
                 trackInventory
-                outOfStockThreshold
-                useGlobalOutOfStockThreshold
-                stockLevels {
-                    id
-                    stockOnHand
-                    stockAllocated
-                    stockLocation {
-                        id
-                        name
-                    }
-                }
                 customFields
             }
         }
