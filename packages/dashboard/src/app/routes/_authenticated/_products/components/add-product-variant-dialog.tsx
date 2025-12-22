@@ -59,7 +59,7 @@ const formSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     sku: z.string().min(1, 'SKU is required'),
     price: z.string().min(1, 'Price is required'),
-    stockOnHand: z.string().min(1, 'Stock level is required'),
+    stockOnHand: z.string(),
     options: z.record(z.string(), z.string()),
 });
 
@@ -305,12 +305,12 @@ export function AddProductVariantDialog({
                                 />
                             )}
                         />
-                        <FormFieldWrapper
-                            control={form.control}
-                            name="stockOnHand"
-                            label={<Trans>Stock level</Trans>}
-                            render={({ field }) => <Input type="number" {...field} />}
-                        />
+                        {/* <FormFieldWrapper */}
+                        {/*     control={form.control} */}
+                        {/*     name="stockOnHand" */}
+                        {/*     label={<Trans>Stock level</Trans>} */}
+                        {/*     render={({ field }) => <Input type="number" {...field} />} */}
+                        {/* /> */}
                         <DialogFooter className="flex flex-col items-end gap-2">
                             {duplicateVariantError && (
                                 <p className="text-sm text-destructive">{duplicateVariantError}</p>
