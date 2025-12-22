@@ -1,7 +1,7 @@
 import { MenuBranding } from '@/vdb/components/shared/powered-by-vendure.js';
 import { useAuth } from '@/vdb/hooks/use-auth.js';
 import { Link, useNavigate, useRouter } from '@tanstack/react-router';
-import { ChevronsUpDown, LogOut, Monitor, Moon, Sparkles, Sun } from 'lucide-react';
+import { ChevronsUpDown, LogOut, Monitor, Moon, Sun } from 'lucide-react';
 
 import {
     DropdownMenu,
@@ -76,22 +76,6 @@ export function NavUser() {
                                         <NavUserIdentity user={user} />
                                     </div>
                                 </DropdownMenuLabel>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem
-                                    render={
-                                        <a
-                                            href="https://vendure.io/pricing"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            aria-label="Explore Platform & Cloud"
-                                        />
-                                    }
-                                >
-                                    <Sparkles />
-                                    <Trans>Explore Platform & Cloud</Trans>
-                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
                             <DropdownMenuGroup>
