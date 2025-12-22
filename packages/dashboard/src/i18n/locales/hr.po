@@ -2879,6 +2879,10 @@ msgstr "Moji spremljeni prikazi"
 msgid "Name"
 msgstr "Naziv"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "Neto cijena: <0/>"
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:140
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:150
 msgid "Never"

@@ -2879,6 +2879,10 @@ msgstr "Mis Vistas Guardadas"
 msgid "Name"
 msgstr "Nombre"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "Precio neto: <0/>"
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:140
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:150
 msgid "Never"

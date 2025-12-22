@@ -2879,6 +2879,10 @@ msgstr "Moje uložené pohledy"
 msgid "Name"
 msgstr "Název"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "Čistá cena: <0/>"
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:140
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:150
 msgid "Never"

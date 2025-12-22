@@ -2879,6 +2879,10 @@ msgstr "मेरो सुरक्षित दृश्यहरू"
 msgid "Name"
 msgstr "नाम"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "शुद्ध मूल्य: <0/>"
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:140
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:150
 msgid "Never"

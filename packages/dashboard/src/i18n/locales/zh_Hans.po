@@ -2879,6 +2879,10 @@ msgstr "我的保存视图"
 msgid "Name"
 msgstr "名称"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "净价: <0/>"
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:140
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:150
 msgid "Never"

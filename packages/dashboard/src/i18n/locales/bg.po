@@ -2004,6 +2004,10 @@ msgstr "Моите запазени изгледи"
 msgid "Name"
 msgstr "Име"
 
+#: src/app/routes/_authenticated/_product-variants/components/variant-price-detail.tsx:87
+msgid "Net price: <0/>"
+msgstr "Нетна цена: <0/>"
+
 msgid "Never"
 msgstr "Никога"
 
