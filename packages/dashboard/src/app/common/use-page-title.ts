@@ -1,7 +1,7 @@
 import { useMatches } from '@tanstack/react-router';
 import React, { isValidElement, ReactElement, useEffect, useState } from 'react';
 
-const DEFAULT_TITLE = 'Vendure';
+const DEFAULT_TITLE = 'Teamshop';
 
 /**
  * @description
