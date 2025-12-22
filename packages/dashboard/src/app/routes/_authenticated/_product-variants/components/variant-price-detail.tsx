@@ -38,7 +38,7 @@ export function VariantPriceDetail({
 }: VariantPriceDetailProps) {
     const { activeChannel } = useChannel();
     const [taxRate, setTaxRate] = useState(0);
-    const [grossPrice, setGrossPrice] = useState(0);
+    const [calculatedPrice, setCalculatedPrice] = useState(0);
 
     // Fetch tax rates
     const { data: taxRatesData } = useQuery({
@@ -70,7 +70,11 @@ export function VariantPriceDetail({
     }, [taxRatesData, activeChannel, taxCategoryId]);
 
     useEffect(() => {
-        setGrossPrice(Math.round((price ?? 0) * ((100 + taxRate) / 100)));
+        setCalculatedPrice(
+            priceIncludesTax
+                ? Math.round((price ?? 0) * (100 / (100 + taxRate)))
+                : Math.round((price ?? 0) * ((100 + taxRate) / 100))
+        );
     }, [price, taxRate]);
 
     return (
@@ -79,9 +83,15 @@ export function VariantPriceDetail({
                 <Trans>Tax rate: {taxRate}%</Trans>
             </div>
             <div className="text-sm">
-                <Trans>
-                    Gross price: <Money value={grossPrice} currency={currencyCode} />
-                </Trans>
+                {priceIncludesTax ? (
+                    <Trans>
+                        Net price: <Money value={calculatedPrice} currency={currencyCode} />
+                    </Trans>
+                ) : (
+                    <Trans>
+                        Gross price: <Money value={calculatedPrice} currency={currencyCode} />
+                    </Trans>
+                )}
             </div>
         </div>
     );
