@@ -39,7 +39,7 @@ export function VariantPriceDetail({
 }: VariantPriceDetailProps) {
     const { activeChannel } = useChannel();
     const [taxRate, setTaxRate] = useState(0);
-    const [grossPrice, setGrossPrice] = useState(0);
+    const [calculatedPrice, setCalculatedPrice] = useState(0);
 
     // Fetch tax rates
     const { data: taxRatesData } = useQuery({
@@ -70,24 +70,31 @@ export function VariantPriceDetail({
         setTaxRate(applicableRate.value);
     }, [taxRatesData, activeChannel, taxCategoryId]);
 
+    // The price field holds gross when the channel's prices include tax, so the figure worth
+    // showing beside it is the net one. Upstream shows "Gross price: <the number you just
+    // typed>", which tells the user nothing.
     useEffect(() => {
-        if (priceIncludesTax) {
-            setGrossPrice(price ?? 0);
-        } else {
-            setGrossPrice(Math.round((price ?? 0) * ((100 + taxRate) / 100)));
-        }
+        setCalculatedPrice(
+            priceIncludesTax
+                ? Math.round((price ?? 0) * (100 / (100 + taxRate)))
+                : Math.round((price ?? 0) * ((100 + taxRate) / 100)),
+        );
     }, [price, taxRate, priceIncludesTax]);
 
     return (
         <Field>
             <FieldLabel>
-                <Trans>Gross price</Trans>{' '}
+                {priceIncludesTax ? <Trans>Net price</Trans> : <Trans>Gross price</Trans>}{' '}
                 <span className="text-muted-foreground">
-                    <Trans>(incl. {taxRate}% tax)</Trans>
+                    {priceIncludesTax ? (
+                        <Trans>(excl. {taxRate}% tax)</Trans>
+                    ) : (
+                        <Trans>(incl. {taxRate}% tax)</Trans>
+                    )}
                 </span>
             </FieldLabel>
             <div className="text-sm pt-1.5">
-                <Money value={grossPrice} currency={currencyCode} />
+                <Money value={calculatedPrice} currency={currencyCode} />
             </div>
         </Field>
     );
