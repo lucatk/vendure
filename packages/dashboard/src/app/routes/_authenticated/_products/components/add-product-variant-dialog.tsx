@@ -59,7 +59,7 @@ const formSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     sku: z.string().min(1, 'SKU is required'),
     price: z.string().min(1, 'Price is required'),
-    stockOnHand: z.string(),
+    stockOnHand: z.string().optional(),
     options: z.record(z.string(), z.string()),
 });
 

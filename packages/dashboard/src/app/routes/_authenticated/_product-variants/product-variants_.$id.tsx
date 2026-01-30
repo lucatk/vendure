@@ -111,6 +111,7 @@ function ProductVariantDetailPage() {
                 price: entity.price,
                 prices: entity.prices,
                 trackInventory: entity.trackInventory,
+                stockLevels: [],
                 translations: entity.translations.map(translation => ({
                     id: translation.id,
                     languageCode: translation.languageCode,
