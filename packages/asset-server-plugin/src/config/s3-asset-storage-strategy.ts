@@ -45,6 +45,12 @@ export interface S3Config {
      * Using type `any` in order to avoid the need to include `aws-sdk` dependency in general.
      */
     nativeS3UploadConfiguration?: any;
+    /**
+     * @description
+     * An optional prefix to add to all S3 object keys. This can be used to "namespace" the assets within the bucket.
+     * For example, if your bucket is used for multiple applications, you might want to set a different prefix for each application.
+     */
+    keyPrefix?: string;
 }
 
 /**
@@ -249,7 +255,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
             params: {
                 ...this.s3Config.nativeS3UploadConfiguration,
                 Bucket: this.s3Config.bucket,
-                Key: fileName,
+                Key: `${this.s3Config.keyPrefix || ''}${fileName}`,
                 Body: data,
                 // Extension-driven; safe under the default upload validation which rejects disallowed types.
                 ContentType: mime.lookup(fileName) || 'application/octet-stream',
@@ -275,7 +281,9 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
         const { HeadObjectCommand } = this.AWS;
 
         try {
-            await this.s3Client.send(new HeadObjectCommand(this.getObjectParams(fileName)));
+            await this.s3Client.send(
+                new HeadObjectCommand(this.getObjectParams(`${this.s3Config.keyPrefix || ''}${fileName}`)),
+            );
             return true;
         } catch (err: any) {
             return false;
