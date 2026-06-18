@@ -184,7 +184,7 @@ export function GenerateVariantsPanel({
                                     />
                                 </TableHead>
                             )}
-                            {showVariantTools && (
+                            {variants.some(v => v.optionNames.length > 0) && (
                                 <TableHead>
                                     <Trans>Variant</Trans>
                                 </TableHead>
@@ -228,7 +228,7 @@ export function GenerateVariantsPanel({
                                     </TableCell>
                                 )}
 
-                                {showVariantTools && (
+                                {variant.optionNames.length > 0 && (
                                     <TableCell className="font-medium">
                                         {variant.optionNames.join(' / ')}
                                     </TableCell>
