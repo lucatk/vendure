@@ -110,22 +110,43 @@ export function GenerateVariantsPanel({
     productId,
     productName,
     optionGroups,
+    existingVariants,
     onSuccess,
     onBack,
+    additionalActions,
 }: Readonly<{
     productId: string;
     productName: string;
     optionGroups: OptionGroup[];
+    existingVariants?: Array<{ options: Array<{ id: string }> }>;
     onSuccess?: () => void;
     onBack?: {
         handler: () => void;
         confirmation?: { title: string; description: string };
     };
+    additionalActions?: React.ReactNode;
 }>) {
     const { t } = useLingui();
     const { activeChannel } = useChannel();
 
-    const variants = useMemo(() => generateVariantCombinations(optionGroups), [optionGroups]);
+    const variants = useMemo(() => {
+        const all = generateVariantCombinations(optionGroups);
+        if (!existingVariants?.length) return all;
+        const existingCombos = new Set(
+            existingVariants.map(v =>
+                v.options
+                    .map(o => o.id)
+                    .sort((a, b) => a.localeCompare(b))
+                    .join(','),
+            ),
+        );
+        return all.filter(
+            v =>
+                !existingCombos.has(
+                    v.optionIds.slice().sort((a, b) => a.localeCompare(b)).join(','),
+                ),
+        );
+    }, [optionGroups, existingVariants]);
 
     // For small products (few option-group combinations) the historical
     // "all variants enabled by default" workflow is convenient. For products
@@ -278,7 +299,7 @@ export function GenerateVariantsPanel({
                                     />
                                 </TableHead>
                             )}
-                            {showVariantTools && (
+                            {variants.some(v => v.optionNames.length > 0) && (
                                 <TableHead>
                                     <Trans>Variant</Trans>
                                 </TableHead>
@@ -322,7 +343,7 @@ export function GenerateVariantsPanel({
                                     </TableCell>
                                 )}
 
-                                {showVariantTools && (
+                                {variant.optionNames.length > 0 && (
                                     <TableCell className="font-medium">
                                         {variant.optionNames.join(' / ')}
                                     </TableCell>
@@ -418,20 +439,23 @@ export function GenerateVariantsPanel({
                                 </button>
                             ))}
                     </div>
-                    <Button
-                        type="button"
-                        onClick={handleCreateVariants}
-                        disabled={createVariantsMutation.isPending || enabledCount === 0}
-                    >
-                        <Save className="mr-2 h-4 w-4" />
-                        {createVariantsMutation.isPending && <Trans>Creating...</Trans>}
-                        {!createVariantsMutation.isPending && enabledCount === 1 && (
-                            <Trans>Create variant</Trans>
-                        )}
-                        {!createVariantsMutation.isPending && enabledCount !== 1 && (
-                            <Trans>Create {enabledCount} variants</Trans>
-                        )}
-                    </Button>
+                    <div className="flex gap-2 items-center">
+                        {additionalActions}
+                        <Button
+                            type="button"
+                            onClick={handleCreateVariants}
+                            disabled={createVariantsMutation.isPending || enabledCount === 0}
+                        >
+                            <Save className="mr-2 h-4 w-4" />
+                            {createVariantsMutation.isPending && <Trans>Creating...</Trans>}
+                            {!createVariantsMutation.isPending && enabledCount === 1 && (
+                                <Trans>Create variant</Trans>
+                            )}
+                            {!createVariantsMutation.isPending && enabledCount !== 1 && (
+                                <Trans>Create {enabledCount} variants</Trans>
+                            )}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Form>
