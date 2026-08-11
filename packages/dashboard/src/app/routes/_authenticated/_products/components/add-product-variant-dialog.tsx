@@ -226,7 +226,7 @@ export function AddProductVariantDialog({
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger render={<Button variant="outline" />}>
                 <Plus className="mr-2 h-4 w-4" />
-                <Trans>Add variant</Trans>
+                <Trans>Add variant manually</Trans>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

@@ -1524,8 +1524,16 @@ msgid "Collections"
 msgstr "Collections"
 
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
-msgid "Add variant"
-msgstr "Add variant"
+msgid "Add variant manually"
+msgstr "Add variant manually"
+
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Generate variants"
+msgstr "Generate variants"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Set price for all visible variants"
+msgstr "Set price for all visible variants"
 
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx
 msgid "Failed to create country"
