@@ -255,6 +255,19 @@ export function GenerateVariantsPanel({
         form.setValue('variants', next, { shouldDirty: true });
     };
 
+    // Master price applies one value to every currently visible variant — useful
+    // when a product has many variants sharing a single price. Scoped to the
+    // filter for the same reason as the toggle above.
+    const [globalPrice, setGlobalPrice] = useState(0);
+    const handleApplyGlobalPrice = (value: number) => {
+        setGlobalPrice(value);
+        const next = { ...(form.getValues('variants') ?? {}) };
+        for (const v of filteredVariants) {
+            next[v.id] = { ...next[v.id], price: value.toString() };
+        }
+        form.setValue('variants', next, { shouldDirty: true });
+    };
+
     const showVariantTools = variants.length > 1;
     const isFiltered = debouncedFilter.length > 0;
 
@@ -318,7 +331,19 @@ export function GenerateVariantsPanel({
                                 <Trans>SKU</Trans>
                             </TableHead>
                             <TableHead>
-                                <Trans>Price</Trans>
+                                <div className="flex items-center gap-2">
+                                    <Trans>Price</Trans>
+                                    <MoneyInput
+                                        value={globalPrice}
+                                        onChange={handleApplyGlobalPrice}
+                                        currency={activeChannel?.defaultCurrencyCode}
+                                        name="__globalPrice"
+                                        onBlur={() => undefined}
+                                        ref={undefined as any}
+                                        aria-label={t`Set price for all visible variants`}
+                                        data-testid="variant-global-price-input"
+                                    />
+                                </div>
                             </TableHead>
                             <TableHead>
                                 <Trans>Stock on Hand</Trans>
