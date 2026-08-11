@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group.js';
 import { toast } from '@/vdb/components/ui/sonner.js';
 import { usePage } from '@/vdb/hooks/use-page.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 interface SaveViewDialogProps {
     open: boolean;
@@ -29,6 +30,7 @@ export const SaveViewDialog: React.FC<SaveViewDialogProps> = ({
     const { saveView, userViews, globalViews, canManageGlobalViews } = useSavedViews();
     const { pageId } = usePage();
     const { settings } = useUserSettings();
+    const { t } = useLingui();
 
     const defaultVisibility = {
         id: false,
@@ -45,14 +47,14 @@ export const SaveViewDialog: React.FC<SaveViewDialogProps> = ({
 
     const handleSave = async () => {
         if (!name.trim()) {
-            toast.error('Please enter a name for the view');
+            toast.error(t`Please enter a name for the view`);
             return;
         }
 
         // Check for duplicate names
         const existingViews = scope === 'user' ? userViews : globalViews;
         if (existingViews.some(v => v.name === name.trim())) {
-            toast.error(`A ${scope} view with this name already exists`);
+            toast.error(t`A ${scope} view with this name already exists`);
             return;
         }
 
@@ -68,12 +70,12 @@ export const SaveViewDialog: React.FC<SaveViewDialogProps> = ({
                 },
                 searchTerm,
             });
-            toast.success(`View "${name}" saved successfully`);
+            toast.success(t`View "${name}" saved successfully`);
             onOpenChange(false);
             setName('');
             setScope('user');
         } catch (error) {
-            toast.error('Failed to save view');
+            toast.error(t`Failed to save view`);
             console.error('Failed to save view:', error);
         } finally {
             setSaving(false);
@@ -84,36 +86,36 @@ export const SaveViewDialog: React.FC<SaveViewDialogProps> = ({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Save Current View</DialogTitle>
+                    <DialogTitle><Trans>Save Current View</Trans></DialogTitle>
                     <DialogDescription>
-                        Save the current filters and search term as a reusable view.
+                        <Trans>Save the current filters and search term as a reusable view.</Trans>
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                        <Label htmlFor="view-name">View Name</Label>
+                        <Label htmlFor="view-name"><Trans>View Name</Trans></Label>
                         <Input
                             id="view-name"
                             value={name}
                             onChange={e => setName(e.target.value)}
-                            placeholder="Enter a name for this view"
+                            placeholder={t`Enter a name for this view`}
                             autoFocus
                         />
                     </div>
                     {canManageGlobalViews && (
                         <div className="space-y-2">
-                            <Label>View Scope</Label>
+                            <Label><Trans>View Scope</Trans></Label>
                             <RadioGroup value={scope} onValueChange={value => setScope(value as 'user' | 'global')}>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="user" id="scope-user" />
                                     <Label htmlFor="scope-user" className="font-normal">
-                                        Personal View (only visible to you)
+                                        <Trans>Personal View (only visible to you)</Trans>
                                     </Label>
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="global" id="scope-global" />
                                     <Label htmlFor="scope-global" className="font-normal">
-                                        Global View (visible to all users)
+                                        <Trans>Global View (visible to all users)</Trans>
                                     </Label>
                                 </div>
                             </RadioGroup>
@@ -122,10 +124,10 @@ export const SaveViewDialog: React.FC<SaveViewDialogProps> = ({
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={() => onOpenChange(false)} disabled={saving}>
-                        Cancel
+                        <Trans>Cancel</Trans>
                     </Button>
                     <Button onClick={handleSave} disabled={saving || !name.trim()}>
-                        {saving ? 'Saving...' : 'Save View'}
+                        {saving ? <Trans>Saving...</Trans> : <Trans>Save View</Trans>}
                     </Button>
                 </DialogFooter>
             </DialogContent>

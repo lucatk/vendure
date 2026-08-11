@@ -150,7 +150,7 @@ function ProductVariantDetailPage() {
             toast.error(
                 creatingNewEntity ? t`Failed to create product variant` : t`Failed to update product variant`,
                 {
-                    description: err instanceof Error ? err.message : 'Unknown error',
+                    description: err instanceof Error ? err.message : t`Unknown error`,
                 },
             );
         },
