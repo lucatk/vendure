@@ -1,6 +1,6 @@
 {
-    "name": "@vendure/asset-server-plugin",
-    "version": "3.8.0",
+    "name": "@lucatk/vendure-asset-server-plugin",
+    "version": "3.8.0-mod1",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "files": [
