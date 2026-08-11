@@ -4,7 +4,7 @@ import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
 import { useSortedLanguages } from '@/vdb/hooks/use-sorted-languages.js';
 import { useUiLanguageLoader } from '@/vdb/hooks/use-ui-language-loader.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMemo, useState } from 'react';
 import { uiConfig } from 'virtual:vendure-ui-config';
 import { Button } from '../ui/button.js';
@@ -21,6 +21,7 @@ export function LanguageDialog() {
     const availableCurrencyCodes = Object.values(CurrencyCode);
     const { formatCurrency, formatRegionName, formatCurrencyName, formatDate } = useLocalFormat();
     const [selectedCurrency, setSelectedCurrency] = useState<string>('USD');
+    const { t } = useLingui();
 
     // Map and sort languages by their formatted names
     const sortedLanguages = useSortedLanguages(availableLanguages);
@@ -63,7 +64,7 @@ export function LanguageDialog() {
                         onValueChange={(value) => { if (value != null) handleLanguageChange(value) }}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a language" />
+                            <SelectValue placeholder={t`Select a language`} />
                         </SelectTrigger>
                         <SelectContent>
                             {sortedLanguages.map(({ code, label }) => (
@@ -85,7 +86,7 @@ export function LanguageDialog() {
                         onValueChange={(value) => { if (value != null) setDisplayLocale(value) }}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a locale" />
+                            <SelectValue placeholder={t`Select a locale`} />
                         </SelectTrigger>
                         <SelectContent>
                             {sortedLocales.map(({ code, label }) => (
@@ -109,7 +110,7 @@ export function LanguageDialog() {
                     onValueChange={(value) => { if (value != null) setSelectedCurrency(value) }}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select a currency" />
+                        <SelectValue placeholder={t`Select a currency`} />
                     </SelectTrigger>
                     <SelectContent>
                         {availableCurrencyCodes.map(currency => (

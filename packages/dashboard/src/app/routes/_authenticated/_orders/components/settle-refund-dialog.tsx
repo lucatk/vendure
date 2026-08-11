@@ -9,7 +9,7 @@ import {
 } from '@/vdb/components/ui/dialog.js';
 import { Input } from '@/vdb/components/ui/input.js';
 import { Label } from '@/vdb/components/ui/label.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useState } from 'react';
 
 type SettleRefundDialogProps = {
@@ -26,6 +26,7 @@ export function SettleRefundDialog({
                                        isLoading,
                                    }: Readonly<SettleRefundDialogProps>) {
     const [transactionId, setTransactionId] = useState('');
+    const { t } = useLingui();
 
     const handleSettle = () => {
         if (transactionId.trim()) {
@@ -61,7 +62,7 @@ export function SettleRefundDialog({
                             id="transaction-id"
                             value={transactionId}
                             onChange={e => setTransactionId(e.target.value)}
-                            placeholder="Enter transaction ID..."
+                            placeholder={t`Enter transaction ID...`}
                             disabled={isLoading}
                         />
                     </div>
