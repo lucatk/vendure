@@ -2,10 +2,10 @@ import { FormFieldWrapper } from '@/vdb/components/shared/form-field-wrapper.js'
 import { Button } from '@/vdb/components/ui/button.js';
 import { Form } from '@/vdb/components/ui/form.js';
 import { Input } from '@/vdb/components/ui/input.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { z, zodResolver } from '@/vdb/lib/zod.js';
 import { Plus, Trash2 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Control, useFieldArray, useForm } from 'react-hook-form';
 import { OptionValueInput } from './option-value-input.js';
 
@@ -19,12 +19,7 @@ export const optionGroupSchema = z.object({
     values: z.array(optionValueSchema).min(1, { message: 'At least one value is required' }),
 });
 
-const multiGroupFormSchema = z.object({
-    optionGroups: z.array(optionGroupSchema),
-});
-
 export type OptionGroup = z.infer<typeof optionGroupSchema>;
-export type MultiGroupForm = z.infer<typeof multiGroupFormSchema>;
 
 export interface SingleOptionGroup {
     name: string;
@@ -50,6 +45,7 @@ export function SingleOptionGroupEditor({
     fieldArrayPath,
     disabled,
 }: Readonly<SingleOptionGroupEditorProps>) {
+    const { t } = useLingui();
     const { fields, append, remove } = useFieldArray({
         control,
         name: fieldArrayPath ? `${fieldArrayPath}.values` : 'values',
@@ -63,7 +59,7 @@ export function SingleOptionGroupEditor({
                         control={control}
                         name={fieldArrayPath ? `${fieldArrayPath}.name` : 'name'}
                         label={<Trans>Option Group Name</Trans>}
-                        render={({ field }) => <Input placeholder="e.g. Size" {...field} />}
+                        render={({ field }) => <Input placeholder={t`e.g. Size`} {...field} />}
                     />
                 </div>
 
@@ -94,6 +90,30 @@ interface OptionGroupsEditorProps {
 }
 
 export function OptionGroupsEditor({ onChange, initialGroups = [] }: Readonly<OptionGroupsEditorProps>) {
+    const { t } = useLingui();
+
+    const multiGroupFormSchema = useMemo(
+        () =>
+            z.object({
+                optionGroups: z.array(
+                    z.object({
+                        name: z.string().min(1, { message: t`Option name is required` }),
+                        values: z
+                            .array(
+                                z.object({
+                                    value: z.string().min(1, { message: t`Value cannot be empty` }),
+                                    id: z.string().min(1, { message: t`Value cannot be empty` }),
+                                }),
+                            )
+                            .min(1, { message: t`At least one value is required` }),
+                    }),
+                ),
+            }),
+        [t],
+    );
+
+    type MultiGroupForm = z.infer<typeof multiGroupFormSchema>;
+
     const form = useForm<MultiGroupForm>({
         resolver: zodResolver(multiGroupFormSchema),
         defaultValues: {
@@ -148,7 +168,7 @@ export function OptionGroupsEditor({ onChange, initialGroups = [] }: Readonly<Op
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => removeOptionGroup(index)}
-                                title="Remove Option"
+                                title={t`Remove Option`}
                             >
                                 <Trash2 className="h-4 w-4" />
                             </Button>

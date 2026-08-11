@@ -36,45 +36,6 @@ interface GeneratedVariant {
     optionNames: string[];
 }
 
-const variantSchema = z
-    .object({
-        enabled: z.boolean(),
-        sku: z.string(),
-        price: z.string(),
-        stock: z.string(),
-    })
-    .superRefine((data, ctx) => {
-        if (!data.enabled) return;
-        if (!data.sku || data.sku.length === 0) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'SKU is required',
-                path: ['sku'],
-            });
-        }
-        if (data.price !== '' && (Number.isNaN(Number(data.price)) || Number(data.price) < 0)) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'Price must be a non-negative number',
-                path: ['price'],
-            });
-        }
-        const stockNum = Number(data.stock);
-        if (data.stock !== '' && (Number.isNaN(stockNum) || stockNum < 0 || !Number.isInteger(stockNum))) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'Stock must be a non-negative integer',
-                path: ['stock'],
-            });
-        }
-    });
-
-const formSchema = z.object({
-    variants: z.record(variantSchema),
-});
-
-type VariantFormValues = z.infer<typeof formSchema>;
-
 function generateVariantCombinations(optionGroups: OptionGroup[]): GeneratedVariant[] {
     const validGroups = optionGroups.filter(g => g.options.length > 0);
     if (validGroups.length === 0) {
@@ -128,6 +89,55 @@ export function GenerateVariantsPanel({
 }>) {
     const { t } = useLingui();
     const { activeChannel } = useChannel();
+
+    const formSchema = useMemo(
+        () =>
+            z.object({
+                variants: z.record(
+                    z
+                        .object({
+                            enabled: z.boolean(),
+                            sku: z.string(),
+                            price: z.string(),
+                            stock: z.string(),
+                        })
+                        .superRefine((data, ctx) => {
+                            if (!data.enabled) return;
+                            if (!data.sku || data.sku.length === 0) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`SKU is required`,
+                                    path: ['sku'],
+                                });
+                            }
+                            if (
+                                data.price !== '' &&
+                                (Number.isNaN(Number(data.price)) || Number(data.price) < 0)
+                            ) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`Price must be a non-negative number`,
+                                    path: ['price'],
+                                });
+                            }
+                            const stockNum = Number(data.stock);
+                            if (
+                                data.stock !== '' &&
+                                (Number.isNaN(stockNum) || stockNum < 0 || !Number.isInteger(stockNum))
+                            ) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`Stock must be a non-negative integer`,
+                                    path: ['stock'],
+                                });
+                            }
+                        }),
+                ),
+            }),
+        [t],
+    );
+
+    type VariantFormValues = z.infer<typeof formSchema>;
 
     const variants = useMemo(() => {
         const all = generateVariantCombinations(optionGroups);
@@ -357,7 +367,7 @@ export function GenerateVariantsPanel({
                                             <Field data-invalid={fieldState.invalid || undefined}>
                                                 <Input
                                                     {...field}
-                                                    placeholder="SKU"
+                                                    placeholder={t`SKU`}
                                                     data-testid="variant-sku-input"
                                                 />
                                                 {fieldState.invalid && (
