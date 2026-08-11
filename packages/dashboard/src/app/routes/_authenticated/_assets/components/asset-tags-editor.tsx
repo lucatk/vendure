@@ -11,7 +11,7 @@ import { Label } from '@/vdb/components/ui/label.js';
 import { Popover, PopoverContent, PopoverTrigger } from '@/vdb/components/ui/popover.js';
 import { api } from '@/vdb/graphql/api.js';
 import { cn } from '@/vdb/lib/utils.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Check, ChevronsUpDown, Settings2, X } from 'lucide-react';
 import { useCallback, useState } from 'react';
@@ -36,6 +36,7 @@ export function AssetTagsEditor({
     const [searchValue, setSearchValue] = useState('');
     const [manageDialogOpen, setManageDialogOpen] = useState(false);
     const queryClient = useQueryClient();
+    const { t } = useLingui();
 
     // Fetch available tags
     const { data: tagsData } = useQuery({
@@ -50,14 +51,14 @@ export function AssetTagsEditor({
         onSuccess: data => {
             const newTag = data.createTag.value;
             onTagsChange([...selectedTags, newTag]);
-            toast.success(`Created tag "${newTag}"`);
+            toast.success(t`Created tag "${newTag}"`);
             setSearchValue('');
             // Invalidate and refetch tags list
             queryClient.invalidateQueries({ queryKey: ['tags'] });
         },
         onError: error => {
-            toast.error('Failed to create tag', {
-                description: error instanceof Error ? error.message : 'Unknown error',
+            toast.error(t`Failed to create tag`, {
+                description: error instanceof Error ? error.message : t`Unknown error`,
             });
         },
     });
@@ -143,7 +144,7 @@ export function AssetTagsEditor({
                     <PopoverContent className="w-full p-0" align="start">
                         <Command>
                             <CommandInput
-                                placeholder="Search tags..."
+                                placeholder={t`Search tags...`}
                                 value={searchValue}
                                 onValueChange={setSearchValue}
                             />

@@ -10,7 +10,7 @@ import {
 import { Input } from '@/vdb/components/ui/input.js';
 import { api } from '@/vdb/graphql/api.js';
 import { cn } from '@/vdb/lib/utils.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -28,6 +28,7 @@ export function ManageTagsDialog({ open, onOpenChange, onTagsUpdated }: Readonly
     const [toDelete, setToDelete] = useState<string[]>([]);
     const [toUpdate, setToUpdate] = useState<Array<{ id: string; value: string }>>([]);
     const [isSaving, setIsSaving] = useState(false);
+    const { t } = useLingui();
 
     // Fetch all tags
     const { data: tagsData, isLoading } = useQuery({
@@ -164,7 +165,7 @@ export function ManageTagsDialog({ open, onOpenChange, onTagsUpdated }: Readonly
             // Also invalidate asset queries to refresh any assets using these tags
             await queryClient.invalidateQueries({ queryKey: ['asset'] });
 
-            toast.success('Tags updated successfully');
+            toast.success(t`Tags updated successfully`);
 
             // Call callback to notify parent component
             if (onTagsUpdated) {
@@ -176,8 +177,8 @@ export function ManageTagsDialog({ open, onOpenChange, onTagsUpdated }: Readonly
             setToUpdate([]);
             onOpenChange(false);
         } catch (error) {
-            toast.error('Failed to update tags', {
-                description: error instanceof Error ? error.message : 'Unknown error',
+            toast.error(t`Failed to update tags`, {
+                description: error instanceof Error ? error.message : t`Unknown error`,
             });
         } finally {
             setIsSaving(false);

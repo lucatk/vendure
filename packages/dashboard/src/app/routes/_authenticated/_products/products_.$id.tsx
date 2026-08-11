@@ -165,7 +165,7 @@ function ProductDetailPage() {
         },
         onError: err => {
             toast.error(creatingNewEntity ? t`Failed to create product` : t`Failed to update product`, {
-                description: err instanceof Error ? err.message : 'Unknown error',
+                description: err instanceof Error ? err.message : t`Unknown error`,
             });
         },
     });
