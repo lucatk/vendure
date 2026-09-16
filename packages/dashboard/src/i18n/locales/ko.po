@@ -56,6 +56,7 @@ msgstr "기존 옵션 그룹을 할당하거나 새로 만드세요"
 msgid "New role"
 msgstr "새 역할"
 
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Apartment, suite, etc."
 msgstr "아파트, 스위트 등"
@@ -365,8 +366,11 @@ msgstr "사용자 정의 필드가 변경되었습니다"
 msgid "Successfully created stock location"
 msgstr "재고 위치가 생성되었습니다"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx
+#: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
+#: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
@@ -374,6 +378,7 @@ msgstr "재고 위치가 생성되었습니다"
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+#: src/app/routes/_authenticated/_products/products_.$id.tsx
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 #: src/lib/components/shared/asset/asset-preview.tsx
 msgid "Unknown error"
@@ -474,6 +479,10 @@ msgstr "세율"
 msgid "Order draft isn't ready to be completed"
 msgstr "임시 저장 주문은 완료할 준비가 되지 않았습니다"
 
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "View Scope"
+msgstr ""
+
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx
 msgid "New collection"
@@ -511,7 +520,12 @@ msgstr "상위 상품"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx
+msgid "Enter transaction ID..."
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+#: src/lib/components/shared/customer-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
 msgstr "도시"
@@ -537,6 +551,10 @@ msgstr "링크 제거"
 #: src/app/routes/_authenticated/_system/settings-store.tsx
 msgid "This field is readonly"
 msgstr "이 필드는 읽기 전용입니다"
+
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "State/Province (optional)"
+msgstr ""
 
 #. placeholder {0}: succeeded.length
 #. placeholder {1}: succeeded.length
@@ -594,6 +612,10 @@ msgstr "고객 이력 로딩 오류: {0}"
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx
 msgid "Successfully removed {selectionLength} {entityType} from channel"
 msgstr "채널에서 {selectionLength}개 {entityType}이(가) 제거되었습니다"
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Save Current View"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
 msgid "Add option value"
@@ -752,6 +774,10 @@ msgstr "사용 가능한 통화"
 msgid "Search customers..."
 msgstr ""
 
+#: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx
+msgid "Failed to create tag"
+msgstr ""
+
 #. placeholder {0}: selectedIds.size
 #: src/lib/components/data-input/product-multi-selector-input.tsx
 msgid "Select {0} Items"
@@ -811,6 +837,10 @@ msgstr "이름"
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx
 msgid "Failed to fulfill order"
 msgstr "주문 이행 실패"
+
+#: src/lib/components/layout/manage-languages-dialog.tsx
+msgid "Channel language settings updated successfully"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx
@@ -1256,6 +1286,10 @@ msgstr "이 필드는 필수입니다"
 msgid "Total refund:"
 msgstr "총 환불:"
 
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Please enter a name for the view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/job-queue.tsx
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx
 msgid "View job result"
@@ -1269,10 +1303,19 @@ msgstr "새 주문을 시뮬레이션하여 배송 방법을 테스트하세요.
 msgid "No items selected"
 msgstr "선택한 항목 없음"
 
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "Phone (optional)"
+msgstr ""
+
 #. placeholder {0}: selected.length
 #: src/lib/components/shared/asset/asset-gallery.tsx
 msgid ", {0} selected"
 msgstr ", {0}개 선택됨"
+
+#. placeholder {0}: error.message
+#: src/lib/components/layout/manage-languages-dialog.tsx
+msgid "Failed to update channel settings: {0}"
+msgstr ""
 
 #: src/lib/components/shared/country-selector.tsx
 msgid "No countries found"
@@ -1572,6 +1615,10 @@ msgstr "일반"
 msgid "Filters"
 msgstr "필터"
 
+#: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
+msgid "Failed to update tags"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts
 msgid "Customer Groups"
@@ -1641,9 +1688,18 @@ msgstr "포함하지 않음"
 msgid "Apply"
 msgstr "적용"
 
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Save the current filters and search term as a reusable view."
+msgstr ""
+
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx
 msgid "New product option"
 msgstr "새 상품 옵션"
+
+#. placeholder {0}: error.message
+#: src/lib/components/layout/manage-languages-dialog.tsx
+msgid "Failed to update global settings: {0}"
+msgstr ""
 
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
@@ -1664,6 +1720,7 @@ msgstr "마지막 페이지로 이동"
 #: src/app/routes/_authenticated/_system/settings-store.tsx
 #: src/lib/components/data-input/product-multi-selector-input.tsx
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx
+#: src/lib/components/data-table/save-view-dialog.tsx
 #: src/lib/components/data-table/use-generated-columns.tsx
 #: src/lib/components/data-table/views-sheet.tsx
 #: src/lib/components/data-table/views-sheet.tsx
@@ -1783,6 +1840,10 @@ msgstr "활성화하면 상품이 상점에서 사용 가능합니다"
 msgid "Scheduled task could not be executed"
 msgstr "예약된 작업을 실행할 수 없습니다"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx
+msgid "Created tag \"{newTag}\""
+msgstr ""
+
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx
@@ -1835,6 +1896,10 @@ msgstr "속성 값 없음"
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "환불 사유가 필요합니다"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "NY"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Could not remove option group"
@@ -1890,6 +1955,14 @@ msgstr "주문이 확정되었습니다"
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Successfully updated profile"
 msgstr "프로필이 업데이트되었습니다"
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Failed to save view"
+msgstr ""
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Enter a name for this view"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx
@@ -2086,6 +2159,7 @@ msgstr "{0}명의 고객"
 msgid "API Keys"
 msgstr "API 키"
 
+#: src/lib/components/layout/language-dialog.tsx
 #: src/lib/components/shared/language-selector.tsx
 msgid "Select a language"
 msgstr "언어 선택"
@@ -2517,6 +2591,7 @@ msgid "fulfillmentState.Shipped"
 msgstr "배송됨"
 
 #: src/lib/components/data-table/save-view-button.tsx
+#: src/lib/components/data-table/save-view-dialog.tsx
 msgid "Save View"
 msgstr "뷰 저장"
 
@@ -2558,6 +2633,10 @@ msgstr "속성"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx
 msgid "{count, plural, one {Are you sure you want to remove {count} customer from this group?} other {Are you sure you want to remove {count} customers from this group?}}"
 msgstr "{count, plural, other {이 그룹에서 {count}명의 고객을 제거하시겠습니까?}}"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "John Smith"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
 msgid "Stock on Hand"
@@ -2736,6 +2815,10 @@ msgstr "속성 값 추가"
 msgid "Please select a target collection"
 msgstr "대상 컬렉션을 선택하세요"
 
+#: src/lib/components/layout/manage-languages-dialog.tsx
+msgid "Global language settings updated successfully"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx
 msgid "Review the changes before applying them to the order."
 msgstr "주문에 적용하기 전에 변경사항을 검토하세요."
@@ -2749,6 +2832,10 @@ msgstr "역할 선택"
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx
 msgid "Order cancelled"
 msgstr "주문이 취소되었습니다"
+
+#: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
+msgid "Tags updated successfully"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx
 msgid "Discount"
@@ -3003,6 +3090,10 @@ msgstr "주문 이력"
 msgid "Override"
 msgstr "재정의"
 
+#: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx
+msgid "Select a state"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
 #~ msgstr "거래 ID는 필수입니다"
@@ -3040,6 +3131,10 @@ msgstr "마지막 결과"
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx
 msgid "Added to group"
 msgstr "그룹에 추가되었습니다"
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Global View (visible to all users)"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts
@@ -3218,6 +3313,7 @@ msgstr "{columnId} 열의 필터 조건 설정"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "국가"
@@ -3230,6 +3326,10 @@ msgstr "단순 상품"
 #: src/lib/framework/defaults.ts
 msgid "Job Queue"
 msgstr "작업 큐"
+
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "Apt 4B (optional)"
+msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx
 msgid "Please confirm you have saved the API key before closing."
@@ -3293,6 +3393,10 @@ msgstr "전역 뷰 관리"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Processing..."
 msgstr "처리 중..."
+
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "123 Main St"
+msgstr ""
 
 #. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx
@@ -3364,6 +3468,10 @@ msgstr "속성 값 검색..."
 msgid "Note"
 msgstr "메모"
 
+#: src/lib/components/layout/manage-languages-dialog.tsx
+msgid "Select default language"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx
 msgid "Available languages"
@@ -3434,7 +3542,7 @@ msgstr "결제가 승인되었습니다"
 msgid "Successfully updated role"
 msgstr "역할이 업데이트되었습니다"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "국가 선택"
 
@@ -3473,6 +3581,7 @@ msgstr "초점 설정"
 msgid "end"
 msgstr "종료"
 
+#: src/lib/components/layout/language-dialog.tsx
 #: src/lib/components/shared/currency-selector.tsx
 msgid "Select a currency"
 msgstr "통화 선택"
@@ -3552,6 +3661,10 @@ msgstr "새 재고 위치"
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "{successfulRefundCount} payment(s) refunded before failure. Check order history for details."
 msgstr "실패 전에 {successfulRefundCount}건의 결제가 환불되었습니다. 자세한 내용은 주문 내역을 확인하세요."
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "A {scope} view with this name already exists"
+msgstr ""
 
 #: src/lib/components/data-input/relation-selector.tsx
 msgid "Select item"
@@ -3644,6 +3757,10 @@ msgstr "임시 저장 주문 상태"
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
 #~ msgid "Successfully created product options"
 #~ msgstr "상품 옵션이 생성되었습니다"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "New York"
+msgstr ""
 
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Loading locations…"
@@ -4084,6 +4201,10 @@ msgstr "소스 파일"
 msgid "Password updated"
 msgstr "비밀번호가 업데이트되었습니다"
 
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "View Name"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "does not contain"
 msgstr "포함하지 않음"
@@ -4278,6 +4399,10 @@ msgstr "활성화하면 필터가 상위 컬렉션에서 상속되어 이 컬렉
 #: src/lib/components/shared/zone-selector.tsx
 msgid "Select a zone"
 msgstr "지역 선택"
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "View \"{name}\" saved successfully"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-shipping-methods-sheet.tsx
 msgid "Test shipping methods"
@@ -4485,6 +4610,11 @@ msgstr "기존 이메일:"
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "모든 사용자가 사용할 수 있도록 뷰를 \"전역\"으로 저장하세요."
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx
+#: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx
+msgid "Search tags..."
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
 msgid "Failed to create variants"
 msgstr "변형 생성 실패"
@@ -4538,6 +4668,10 @@ msgstr "표시된 모든 변형 전환"
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx
 msgid "Verified"
 msgstr "확인됨"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "123 Main Street"
+msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx
@@ -4599,6 +4733,10 @@ msgstr "주문에서 쿠폰 코드가 제거되었습니다"
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx
 msgid "Never"
 msgstr "없음"
+
+#: src/lib/components/data-table/save-view-dialog.tsx
+msgid "Personal View (only visible to you)"
+msgstr ""
 
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Failed to update facet value"
@@ -4678,6 +4816,10 @@ msgstr "쿠폰 코드 추가"
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Coupon code set for order"
 msgstr "주문에 쿠폰 코드가 설정되었습니다"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "Company name"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-line-custom-fields-form.tsx
 msgid "Custom Fields"
@@ -5193,6 +5335,14 @@ msgstr "토큰"
 msgid "Fulfilling..."
 msgstr "이행 중..."
 
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "Company (optional)"
+msgstr ""
+
+#: src/lib/components/layout/language-dialog.tsx
+msgid "Select a locale"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx
 msgid "Add option group to product"
 msgstr "상품에 옵션 그룹 추가"
@@ -5243,6 +5393,10 @@ msgstr "입력한 후 Enter 또는 쉼표를 눌러 추가..."
 #: src/lib/components/shared/history-timeline/history-note-editor.tsx
 msgid "Edit Note"
 msgstr "메모 편집"
+
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "John Doe"
+msgstr ""
 
 #: src/lib/components/shared/asset/asset-gallery.tsx
 msgid "No assets found. Try adjusting your filters."
@@ -5548,6 +5702,10 @@ msgstr "항목 제거"
 msgid "Video"
 msgstr "비디오"
 
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "+1 (555) 123-4567"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "less than"
 msgstr "보다 작음"
@@ -5587,6 +5745,10 @@ msgstr "환불 및 취소"
 #: src/app/routes/_authenticated/_shipping-methods/components/test-shipping-methods-result.tsx
 msgid "Testing shipping methods..."
 msgstr "배송 방법 테스트 중..."
+
+#: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
+msgid "10001"
+msgstr ""
 
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx
@@ -5750,6 +5912,10 @@ msgstr "컬렉션 내용을 미리 보려면 필터를 추가하세요."
 msgid "Subtotal"
 msgstr "소계"
 
+#: src/lib/components/shared/customer-address-form.tsx
+msgid "Postal Code (optional)"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "보다 작음"
@@ -5831,6 +5997,7 @@ msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters는 WidgetFiltersProvider 내에서 사용해야 합니다"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "주소 편집"
 
@@ -5872,6 +6039,7 @@ msgstr "이 변형이 품절로 간주되는 재고 수준을 설정합니다. �
 #~ msgstr "상품 옵션 생성"
 
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
+#: src/lib/components/data-table/save-view-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Saving..."
 msgstr "저장 중..."
@@ -5997,6 +6165,7 @@ msgstr "활성"
 msgid "Tax base"
 msgstr "과세 기준"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"
