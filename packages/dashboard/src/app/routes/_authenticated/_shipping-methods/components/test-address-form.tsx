@@ -4,7 +4,7 @@ import { AccordionContent, AccordionItem, AccordionTrigger } from '@/vdb/compone
 import { Form } from '@/vdb/components/ui/form.js';
 import { Input } from '@/vdb/components/ui/input.js';
 import { LS_KEY_SHIPPING_TEST_ADDRESS } from '@/vdb/constants.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -25,6 +25,7 @@ interface TestAddressFormProps {
 }
 
 export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormProps>) {
+    const { t } = useLingui();
     const form = useForm<TestAddress>({
         defaultValues: (() => {
             try {
@@ -134,14 +135,18 @@ export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormPro
                                 control={form.control}
                                 name="fullName"
                                 label={<Trans>Full Name</Trans>}
-                                render={({ field }) => <Input {...field} placeholder="John Smith" />}
+                                render={({ field }) => <Input {...field} placeholder={t`John Smith`} />}
                             />
                             <FormFieldWrapper
                                 control={form.control}
                                 name="company"
                                 label={<Trans>Company</Trans>}
                                 render={({ field }) => (
-                                    <Input {...field} value={field.value || ''} placeholder="Company name" />
+                                    <Input
+                                        {...field}
+                                        value={field.value || ''}
+                                        placeholder={t`Company name`}
+                                    />
                                 )}
                             />
                         </div>
@@ -150,7 +155,7 @@ export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormPro
                             control={form.control}
                             name="streetLine1"
                             label={<Trans>Street Address</Trans>}
-                            render={({ field }) => <Input {...field} placeholder="123 Main Street" />}
+                            render={({ field }) => <Input {...field} placeholder={t`123 Main Street`} />}
                         />
 
                         <FormFieldWrapper
@@ -161,7 +166,7 @@ export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormPro
                                 <Input
                                     {...field}
                                     value={field.value || ''}
-                                    placeholder="Apartment, suite, etc."
+                                    placeholder={t`Apartment, suite, etc.`}
                                 />
                             )}
                         />
@@ -171,19 +176,19 @@ export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormPro
                                 control={form.control}
                                 name="city"
                                 label={<Trans>City</Trans>}
-                                render={({ field }) => <Input {...field} placeholder="New York" />}
+                                render={({ field }) => <Input {...field} placeholder={t`New York`} />}
                             />
                             <FormFieldWrapper
                                 control={form.control}
                                 name="province"
                                 label={<Trans>State / Province</Trans>}
-                                render={({ field }) => <Input {...field} placeholder="NY" />}
+                                render={({ field }) => <Input {...field} placeholder={t`NY`} />}
                             />
                             <FormFieldWrapper
                                 control={form.control}
                                 name="postalCode"
                                 label={<Trans>Postal Code</Trans>}
-                                render={({ field }) => <Input {...field} placeholder="10001" />}
+                                render={({ field }) => <Input {...field} placeholder={t`10001`} />}
                             />
                         </div>
 
@@ -205,7 +210,7 @@ export function TestAddressForm({ onAddressChange }: Readonly<TestAddressFormPro
                                     <Input
                                         {...field}
                                         value={field.value || ''}
-                                        placeholder="+1 (555) 123-4567"
+                                        placeholder={t`+1 (555) 123-4567`}
                                     />
                                 )}
                             />

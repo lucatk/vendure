@@ -1,5 +1,5 @@
 import { z, zodResolver } from '@/vdb/lib/zod.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
@@ -54,6 +54,7 @@ export function CustomerAddressForm<T>({
     hideDefaultAddressFlags = false,
     submitLabel,
 }: CustomerAddressFormProps<T>) {
+    const { t } = useLingui();
     const form = useForm<AddressFormValues>({
         resolver: zodResolver(addressFormSchema),
         defaultValues: {
@@ -89,7 +90,7 @@ export function CustomerAddressForm<T>({
                         control={form.control}
                         name="fullName"
                         label={<Trans>Full Name</Trans>}
-                        render={({ field }) => <Input placeholder="John Doe" {...field} value={field.value || ''} />}
+                        render={({ field }) => <Input placeholder={t`John Doe`} {...field} value={field.value || ''} />}
                     />
 
                     {/* Company */}
@@ -98,7 +99,7 @@ export function CustomerAddressForm<T>({
                         name="company"
                         label={<Trans>Company</Trans>}
                         render={({ field }) => (
-                            <Input placeholder="Company (optional)" {...field} value={field.value || ''} />
+                            <Input placeholder={t`Company (optional)`} {...field} value={field.value || ''} />
                         )}
                     />
 
@@ -108,7 +109,7 @@ export function CustomerAddressForm<T>({
                         name="streetLine1"
                         label={<Trans>Street Address</Trans>}
                         render={({ field }) => (
-                            <Input placeholder="123 Main St" {...field} value={field.value || ''} />
+                            <Input placeholder={t`123 Main St`} {...field} value={field.value || ''} />
                         )}
                     />
 
@@ -118,7 +119,7 @@ export function CustomerAddressForm<T>({
                         name="streetLine2"
                         label={<Trans>Apartment, suite, etc.</Trans>}
                         render={({ field }) => (
-                            <Input placeholder="Apt 4B (optional)" {...field} value={field.value || ''} />
+                            <Input placeholder={t`Apt 4B (optional)`} {...field} value={field.value || ''} />
                         )}
                     />
 
@@ -127,7 +128,7 @@ export function CustomerAddressForm<T>({
                         control={form.control}
                         name="city"
                         label={<Trans>City</Trans>}
-                        render={({ field }) => <Input placeholder="City" {...field} value={field.value || ''} />}
+                        render={({ field }) => <Input placeholder={t`City`} {...field} value={field.value || ''} />}
                     />
 
                     {/* Province/State */}
@@ -137,7 +138,7 @@ export function CustomerAddressForm<T>({
                         label={<Trans>State/Province</Trans>}
                         render={({ field }) => (
                             <Input
-                                placeholder="State/Province (optional)"
+                                placeholder={t`State/Province (optional)`}
                                 {...field}
                                 value={field.value || ''}
                             />
@@ -150,7 +151,7 @@ export function CustomerAddressForm<T>({
                         name="postalCode"
                         label={<Trans>Postal Code</Trans>}
                         render={({ field }) => (
-                            <Input placeholder="Postal Code (optional)" {...field} value={field.value || ''} />
+                            <Input placeholder={t`Postal Code (optional)`} {...field} value={field.value || ''} />
                         )}
                     />
 
@@ -171,7 +172,7 @@ export function CustomerAddressForm<T>({
                         name="phoneNumber"
                         label={<Trans>Phone Number</Trans>}
                         render={({ field }) => (
-                            <Input placeholder="Phone (optional)" {...field} value={field.value || ''} />
+                            <Input placeholder={t`Phone (optional)`} {...field} value={field.value || ''} />
                         )}
                     />
                 </div>

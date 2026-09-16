@@ -18,7 +18,7 @@ import { schemaLanguageCodes as globalLanguageCodes } from '@/vdb/graphql/schema
 import { useChannel } from '@/vdb/hooks/use-channel.js';
 import { usePermissions } from '@/vdb/hooks/use-permissions.js';
 import { useSortedLanguages } from '@/vdb/hooks/use-sorted-languages.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AlertCircle, Lock } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -77,6 +77,7 @@ export function ManageLanguagesDialog({ open, onClose }: ManageLanguagesDialogPr
     const { activeChannel } = useChannel();
     const { hasPermissions } = usePermissions();
     const queryClient = useQueryClient();
+    const { t } = useLingui();
 
     const displayChannel = activeChannel;
 
@@ -113,10 +114,10 @@ export function ManageLanguagesDialog({ open, onClose }: ManageLanguagesDialogPr
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['globalSettings'] });
             queryClient.invalidateQueries({ queryKey: ['getServerConfig'] });
-            toast.success('Global language settings updated successfully');
+            toast.success(t`Global language settings updated successfully`);
         },
         onError: (error: any) => {
-            toast.error(`Failed to update global settings: ${error.message}`);
+            toast.error(t`Failed to update global settings: ${error.message}`);
         },
     });
 
@@ -129,10 +130,10 @@ export function ManageLanguagesDialog({ open, onClose }: ManageLanguagesDialogPr
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['channels'] });
             queryClient.invalidateQueries({ queryKey: ['activeChannel'] });
-            toast.success('Channel language settings updated successfully');
+            toast.success(t`Channel language settings updated successfully`);
         },
         onError: (error: any) => {
-            toast.error(`Failed to update channel settings: ${error.message}`);
+            toast.error(t`Failed to update channel settings: ${error.message}`);
         },
     });
 
@@ -357,7 +358,7 @@ export function ManageLanguagesDialog({ open, onClose }: ManageLanguagesDialogPr
                                             disabled={!canUpdateChannel}
                                         >
                                             <SelectTrigger className="w-[200px]">
-                                                <SelectValue placeholder="Select default language" />
+                                                <SelectValue placeholder={t`Select default language`} />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {sortedChannelLanguages.map(({ code, label }) => (
