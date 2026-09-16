@@ -10,6 +10,7 @@ import {
     defaultAvailableLocales,
     defaultLanguage,
     defaultLocale,
+    defaultPageTitle,
 } from '../constants.js';
 import { ResolvedUiConfig, UiConfigPluginOptions } from '../vite-plugin-ui-config.js';
 
@@ -67,9 +68,15 @@ export function getUiConfig(
                   ],
     };
 
+    // Merge branding configuration with defaults
+    const branding = {
+        pageTitle: pluginOptions.branding?.pageTitle || defaultPageTitle,
+    };
+
     return {
         api,
         i18n,
         orders,
+        branding,
     };
 }

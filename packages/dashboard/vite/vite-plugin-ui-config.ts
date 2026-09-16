@@ -137,6 +137,25 @@ export interface OrdersConfig {
 
 /**
  * @description
+ * Options used by the {@link vendureDashboardPlugin} to configure the branding
+ * of the Dashboard.
+ *
+ * @docsCategory vite-plugin
+ * @docsPage vendureDashboardPlugin
+ */
+export interface BrandingConfig {
+    /**
+     * @description
+     * The title used for the browser tab. The breadcrumb of the current route is
+     * prepended to it, e.g. "Products • Vendure".
+     *
+     * @default 'Vendure'
+     */
+    pageTitle?: string;
+}
+
+/**
+ * @description
  * Options used by the {@link vendureDashboardPlugin} to configure aspects of the
  * Dashboard UI behaviour.
  *
@@ -160,6 +179,11 @@ export interface UiConfigPluginOptions {
      * Configuration for order-related settings
      */
     orders?: OrdersConfig;
+    /**
+     * @description
+     * Configuration for branding settings
+     */
+    branding?: BrandingConfig;
 }
 
 /**
@@ -184,6 +208,11 @@ export interface ResolvedUiConfig {
      * Order-related settings with all defaults applied
      */
     orders: Required<OrdersConfig>;
+    /**
+     * @description
+     * Branding settings with all defaults applied
+     */
+    branding: Required<BrandingConfig>;
     /**
      * @description
      * The version of the @vendure/dashboard package.

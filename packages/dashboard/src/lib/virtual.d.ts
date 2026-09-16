@@ -34,10 +34,15 @@ declare module 'virtual:vendure-ui-config' {
         refundReasons: Array<{ value: string; label: string }>;
     }
 
+    interface ResolvedBrandingConfig {
+        pageTitle: string;
+    }
+
     interface ResolvedUiConfig {
         api: ResolvedApiConfig;
         i18n: ResolvedI18nConfig;
         orders: ResolvedOrdersConfig;
+        branding: ResolvedBrandingConfig;
         version: string;
     }
 
