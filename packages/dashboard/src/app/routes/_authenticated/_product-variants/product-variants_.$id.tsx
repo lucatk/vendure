@@ -101,15 +101,8 @@ function ProductVariantDetailPage() {
         queryFn: () => api.query(stockLocationsQueryDocument, {}),
     });
 
-    // Free-text value per option group (the source of truth for the option comboboxes).
-    // An entry equal to an existing option's name reassigns to it; any other non-empty
-    // value is created as a new option on save.
-    const [optionTextByGroup, setOptionTextByGroup] = useState<Record<string, string>>({});
-    const [duplicateOptionsError, setDuplicateOptionsError] = useState<string | null>(null);
-    const [isSavingOptions, setIsSavingOptions] = useState(false);
-
-    // Holds the stock levels as loaded into the form, so the update transform can
-    // tell which ones the admin actually edited (see #4803).
+    // Stock management is removed in this fork, so the form never loads stock levels and
+    // this stays undefined — getChangedStockLevels then drops stockLevels from the input.
     const originalStockLevelsRef = useRef<StockLevelInput[] | undefined>(undefined);
 
     const { form, submitHandler, entity, isPending, resetForm } = useDetailPage({
@@ -179,13 +172,6 @@ function ProductVariantDetailPage() {
             );
         },
     });
-
-    useEffect(() => {
-        originalStockLevelsRef.current = entity?.stockLevels.map(stockLevel => ({
-            stockLocationId: stockLevel.stockLocation.id,
-            stockOnHand: stockLevel.stockOnHand,
-        }));
-    }, [entity]);
 
     const availableCurrencies = activeChannel?.availableCurrencyCodes ?? [];
     const [prices, taxCategoryId, stockLevels] = form.watch(['prices', 'taxCategoryId', 'stockLevels']);
