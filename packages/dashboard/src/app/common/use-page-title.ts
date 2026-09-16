@@ -1,7 +1,8 @@
 import { useMatches } from '@tanstack/react-router';
 import React, { isValidElement, ReactElement, useEffect, useState } from 'react';
+import { uiConfig } from 'virtual:vendure-ui-config';
 
-const DEFAULT_TITLE = 'Teamshop';
+const DEFAULT_TITLE = uiConfig.branding.pageTitle;
 
 /**
  * @description

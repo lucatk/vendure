@@ -3,6 +3,8 @@ import { LanguageCode } from '@vendure/common/lib/generated-types';
 export const defaultLanguage = LanguageCode.en;
 export const defaultLocale = undefined;
 
+export const defaultPageTitle = 'Vendure';
+
 export const defaultAvailableLanguages = [
     LanguageCode.he,
     LanguageCode.ar,
