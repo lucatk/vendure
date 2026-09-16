@@ -523,6 +523,10 @@ msgstr "父級產品"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -918,6 +922,11 @@ msgstr ""
 msgid "Failed to create collection"
 msgstr "建立集合失敗"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "前往第一頁"
@@ -925,6 +934,10 @@ msgstr "前往第一頁"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #~ msgid "Defaults to the default currency."
 #~ msgstr ""
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1443,6 +1456,10 @@ msgstr "訂單已轉換"
 msgid "is before"
 msgstr "在之前"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "刪除草稿訂單"
@@ -1657,6 +1674,12 @@ msgstr "套用"
 msgid "New product option"
 msgstr "新增商品選項"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "前往最後一頁"
@@ -1844,6 +1867,10 @@ msgstr "過去30天"
 msgid "No facet values"
 msgstr "無屬性值"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "需要提供退款原因"
@@ -1993,6 +2020,10 @@ msgstr "轉移至 {name}"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "剩餘庫存"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3094,6 +3125,10 @@ msgstr "測試結果"
 msgid "Add customer"
 msgstr "新增客戶"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3244,6 +3279,7 @@ msgstr "設定 {columnId} 欄的篩選條件"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "國家"
@@ -3464,7 +3500,7 @@ msgstr "付款已授權"
 msgid "Successfully updated role"
 msgstr "已成功更新角色"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "選取一個國家"
 
@@ -3545,9 +3581,9 @@ msgstr "不等於"
 msgid "Existing customer"
 msgstr ""
 
-#: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
-#~ msgid "e.g. Size"
-#~ msgstr "例如：尺寸"
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
+msgstr "例如：尺寸"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
 msgid "No checkers found"
@@ -3782,6 +3818,10 @@ msgstr "{0, plural, other {無法刪除 {2} 個庫存地點}}"
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "屬性"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -5835,6 +5875,10 @@ msgstr "新增篩選器以預覽集合內容。"
 msgid "Subtotal"
 msgstr "小計"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "小於"
@@ -5915,6 +5959,7 @@ msgstr "更新屬性失敗"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters 必須在 WidgetFiltersProvider 中使用"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "編輯地址"
@@ -6082,6 +6127,7 @@ msgstr "活躍"
 msgid "Tax base"
 msgstr "稅基"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"

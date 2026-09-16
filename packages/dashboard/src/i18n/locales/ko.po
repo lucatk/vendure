@@ -511,6 +511,10 @@ msgstr "상위 상품"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -910,9 +914,18 @@ msgstr "임시 저장 주문 완료 실패: {0}"
 msgid "Failed to create collection"
 msgstr "컬렉션 생성 실패"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "첫 페이지로 이동"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1431,6 +1444,10 @@ msgstr "주문이 전환되었습니다"
 msgid "is before"
 msgstr "이전"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "임시 저장 주문 삭제"
@@ -1645,6 +1662,12 @@ msgstr "적용"
 msgid "New product option"
 msgstr "새 상품 옵션"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "마지막 페이지로 이동"
@@ -1832,6 +1855,10 @@ msgstr "최근 30일"
 msgid "No facet values"
 msgstr "속성 값 없음"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "환불 사유가 필요합니다"
@@ -1975,6 +2002,10 @@ msgstr "{name}(으)로 이전"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "남은 재고"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3068,6 +3099,10 @@ msgstr "테스트 결과"
 msgid "Add customer"
 msgstr "고객 추가"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3218,6 +3253,7 @@ msgstr "{columnId} 열의 필터 조건 설정"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "국가"
@@ -3434,7 +3470,7 @@ msgstr "결제가 승인되었습니다"
 msgid "Successfully updated role"
 msgstr "역할이 업데이트되었습니다"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "국가 선택"
 
@@ -3515,9 +3551,9 @@ msgstr "같지 않음"
 msgid "Existing customer"
 msgstr ""
 
-#: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
-#~ msgid "e.g. Size"
-#~ msgstr "예: 사이즈"
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
+msgstr "예: 사이즈"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
 msgid "No checkers found"
@@ -3749,6 +3785,10 @@ msgstr "{0, plural, other {{2}개 재고 위치 삭제 실패}}"
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "속성"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr ""
 
 #: src/lib/components/shared/assigned-channels.tsx
 msgid "Cannot remove from active channel"
@@ -5750,6 +5790,10 @@ msgstr "컬렉션 내용을 미리 보려면 필터를 추가하세요."
 msgid "Subtotal"
 msgstr "소계"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "보다 작음"
@@ -5830,6 +5874,7 @@ msgstr "속성 업데이트 실패"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters는 WidgetFiltersProvider 내에서 사용해야 합니다"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "주소 편집"
@@ -5997,6 +6042,7 @@ msgstr "활성"
 msgid "Tax base"
 msgstr "과세 기준"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"

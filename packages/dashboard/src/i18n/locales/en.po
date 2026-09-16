@@ -523,6 +523,10 @@ msgstr "Parent product"
 msgid "Create new customer"
 msgstr "Create new customer"
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr "Option value name is required"
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -918,6 +922,11 @@ msgstr "Failed to complete draft order: {0}"
 msgid "Failed to create collection"
 msgstr "Failed to create collection"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr "SKU is required"
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "Go to first page"
@@ -925,6 +934,10 @@ msgstr "Go to first page"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #~ msgid "Defaults to the default currency."
 #~ msgstr "Defaults to the default currency."
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr "Name is required"
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1443,6 +1456,10 @@ msgstr "Order transitioned"
 msgid "is before"
 msgstr "is before"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr "Stock must be a non-negative integer"
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "Delete draft order"
@@ -1657,6 +1674,12 @@ msgstr "Apply"
 msgid "New product option"
 msgstr "New product option"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr "A variant with these options already exists: {0} ({1})"
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "Go to last page"
@@ -1844,6 +1867,10 @@ msgstr "Last 30 days"
 msgid "No facet values"
 msgstr "No facet values"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr "Stock level is required"
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "A reason for the refund is required"
@@ -1993,6 +2020,10 @@ msgstr "Transfer to {name}"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "Remaining stock"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr "Price must be a non-negative number"
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3094,6 +3125,10 @@ msgstr "Test Results"
 msgid "Add customer"
 msgstr "Add customer"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr "Remove Option"
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3244,6 +3279,7 @@ msgstr "Set filter criteria for the {columnId} column"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "Country"
@@ -3464,7 +3500,7 @@ msgstr "Payment authorized"
 msgid "Successfully updated role"
 msgstr "Successfully updated role"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "Select a country"
 
@@ -3545,9 +3581,9 @@ msgstr "is not equal to"
 msgid "Existing customer"
 msgstr "Existing customer"
 
-#: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
-#~ msgid "e.g. Size"
-#~ msgstr "e.g. Size"
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
+msgstr "e.g. Size"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
 msgid "No checkers found"
@@ -3782,6 +3818,10 @@ msgstr "{0, plural, one {Failed to delete {1} stock location} other {Failed to d
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "Facet"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr "Price is required"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -5835,6 +5875,10 @@ msgstr "Add filters to preview the collection contents."
 msgid "Subtotal"
 msgstr "Subtotal"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr "Enter value and press Enter"
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "is less than"
@@ -5915,6 +5959,7 @@ msgstr "Failed to update facet"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters must be used within a WidgetFiltersProvider"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "Edit Address"
@@ -6082,6 +6127,7 @@ msgstr "Active"
 msgid "Tax base"
 msgstr "Tax base"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"

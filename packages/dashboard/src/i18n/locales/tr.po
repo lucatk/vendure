@@ -523,6 +523,10 @@ msgstr "Üst ürün"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -918,6 +922,11 @@ msgstr ""
 msgid "Failed to create collection"
 msgstr "Koleksiyon oluşturulamadı"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "İlk sayfaya git"
@@ -925,6 +934,10 @@ msgstr "İlk sayfaya git"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #~ msgid "Defaults to the default currency."
 #~ msgstr ""
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1443,6 +1456,10 @@ msgstr "Sipariş geçiş yaptı"
 msgid "is before"
 msgstr "öncesinde"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "Taslak siparişi sil"
@@ -1657,6 +1674,12 @@ msgstr "Uygula"
 msgid "New product option"
 msgstr "Yeni ürün seçeneği"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "Son sayfaya git"
@@ -1844,6 +1867,10 @@ msgstr "Son 30 gün"
 msgid "No facet values"
 msgstr "Özellik değeri yok"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "İade için bir neden gereklidir"
@@ -1993,6 +2020,10 @@ msgstr "{name} konumuna aktar"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "Kalan stok"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3094,6 +3125,10 @@ msgstr "Test Sonuçları"
 msgid "Add customer"
 msgstr "Müşteri ekle"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3244,6 +3279,7 @@ msgstr "{columnId} sütunu için filtre kriterlerini belirleyin"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "Ülke"
@@ -3464,7 +3500,7 @@ msgstr "Ödeme yetkilendirildi"
 msgid "Successfully updated role"
 msgstr "Rol başarıyla güncellendi"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "Bir ülke seçin"
 
@@ -3545,9 +3581,9 @@ msgstr "eşit değildir"
 msgid "Existing customer"
 msgstr ""
 
-#: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
-#~ msgid "e.g. Size"
-#~ msgstr "örn. Beden"
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
+msgstr "örn. Beden"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
 msgid "No checkers found"
@@ -3782,6 +3818,10 @@ msgstr "{0, plural, one {{1} stok konumu silinemedi} other {{2} stok konumu sili
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "Özellik"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -5835,6 +5875,10 @@ msgstr "Koleksiyon içeriğini önizlemek için filtre ekleyin."
 msgid "Subtotal"
 msgstr "Ara toplam"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "küçüktür"
@@ -5915,6 +5959,7 @@ msgstr "Özellik güncellenemedi"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters bir WidgetFiltersProvider içinde kullanılmalıdır"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "Adresi Düzenle"
@@ -6082,6 +6127,7 @@ msgstr "Etkin"
 msgid "Tax base"
 msgstr "Vergi matrahı"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"

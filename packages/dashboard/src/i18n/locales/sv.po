@@ -523,6 +523,10 @@ msgstr "Överordnad produkt"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -918,6 +922,11 @@ msgstr ""
 msgid "Failed to create collection"
 msgstr "Misslyckades att skapa kollektion"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "Gå till första sidan"
@@ -925,6 +934,10 @@ msgstr "Gå till första sidan"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #~ msgid "Defaults to the default currency."
 #~ msgstr ""
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1443,6 +1456,10 @@ msgstr "Beställning övergick"
 msgid "is before"
 msgstr "är före"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "Ta bort utkast till beställning"
@@ -1657,6 +1674,12 @@ msgstr "Tillämpa"
 msgid "New product option"
 msgstr "Nytt produktalternativ"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "Gå till sista sidan"
@@ -1844,6 +1867,10 @@ msgstr "Senaste 30 dagarna"
 msgid "No facet values"
 msgstr "Inga facettvärden"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "En anledning för återbetalningen krävs"
@@ -1993,6 +2020,10 @@ msgstr "Överför till {name}"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "Kvarvarande lagersaldo"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3094,6 +3125,10 @@ msgstr "Testresultat"
 msgid "Add customer"
 msgstr "Lägg till kund"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3244,6 +3279,7 @@ msgstr "Ange filterkriterier för kolumnen {columnId}"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "Land"
@@ -3464,7 +3500,7 @@ msgstr "Betalning auktoriserad"
 msgid "Successfully updated role"
 msgstr "Roll uppdaterad"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "Välj ett land"
 
@@ -3545,9 +3581,9 @@ msgstr "är inte lika med"
 msgid "Existing customer"
 msgstr ""
 
-#: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx
-#~ msgid "e.g. Size"
-#~ msgstr "t.ex. Storlek"
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
+msgstr "t.ex. Storlek"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
 msgid "No checkers found"
@@ -3782,6 +3818,10 @@ msgstr "{0, plural, one {Det gick inte att ta bort {1} lagerplats} other {Det gi
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "Facett"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -5835,6 +5875,10 @@ msgstr "Lägg till filter för att förhandsgranska samlingens innehåll."
 msgid "Subtotal"
 msgstr "Delsumma"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "är mindre än"
@@ -5915,6 +5959,7 @@ msgstr "Misslyckades att uppdatera facett"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters måste användas inom en WidgetFiltersProvider"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "Redigera adress"
@@ -6082,6 +6127,7 @@ msgstr "Aktiv"
 msgid "Tax base"
 msgstr "Skattebas"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"

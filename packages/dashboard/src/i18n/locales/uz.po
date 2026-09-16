@@ -495,6 +495,10 @@ msgstr "Asosiy mahsulot"
 msgid "Create new customer"
 msgstr ""
 
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx
+msgid "Option value name is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "City"
@@ -890,6 +894,11 @@ msgstr "Qoralama buyurtmani yakunlab bo'lmadi: {0}"
 msgid "Failed to create collection"
 msgstr "To'plamni yaratib bo'lmadi"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "SKU is required"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to first page"
 msgstr "Birinchi sahifaga o'tish"
@@ -897,6 +906,10 @@ msgstr "Birinchi sahifaga o'tish"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #~ msgid "Defaults to the default currency."
 #~ msgstr ""
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Name is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx
 msgid "Failed to create product"
@@ -1395,6 +1408,10 @@ msgstr "Buyurtma o'tkazildi"
 msgid "is before"
 msgstr "oldin"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Stock must be a non-negative integer"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Delete draft order"
 msgstr "Qoralama buyurtmani o'chirish"
@@ -1604,6 +1621,12 @@ msgstr "Qo'llash"
 msgid "New product option"
 msgstr "Yangi mahsulot parametri"
 
+#. placeholder {0}: existingVariant.name
+#. placeholder {1}: existingVariant.sku
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "A variant with these options already exists: {0} ({1})"
+msgstr ""
+
 #: src/lib/components/data-table/data-table-pagination.tsx
 msgid "Go to last page"
 msgstr "Oxirgi sahifaga o'tish"
@@ -1783,6 +1806,10 @@ msgstr "So'nggi 30 kun"
 msgid "No facet values"
 msgstr "Faset qiymatlari yo'q"
 
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Stock level is required"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "A reason for the refund is required"
 msgstr "Pul qaytarish uchun sabab talab qilinadi"
@@ -1926,6 +1953,10 @@ msgstr "{name} ga o'tkazish"
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Remaining stock"
 msgstr "Qolgan zaxira"
+
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx
+msgid "Price must be a non-negative number"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx
 msgid "Remove from zone"
@@ -3002,6 +3033,10 @@ msgstr "Sinov natijalari"
 msgid "Add customer"
 msgstr "Mijoz qoʻshish"
 
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "Remove Option"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx
 #: src/lib/components/layout/manage-languages-dialog.tsx
 msgid "Save Changes"
@@ -3152,6 +3187,7 @@ msgstr "{columnId} ustuni uchun filtr mezonlarini belgilang"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx
+#: src/lib/components/shared/address-country-select.tsx
 #: src/lib/components/shared/customer-address-form.tsx
 msgid "Country"
 msgstr "Mamlakat"
@@ -3372,7 +3408,7 @@ msgstr "To'lov tasdiqlandi"
 msgid "Successfully updated role"
 msgstr "Rol yangilandi"
 
-#: src/lib/components/shared/customer-address-form.tsx
+#: src/lib/components/shared/address-country-select.tsx
 msgid "Select a country"
 msgstr "Mamlakatni tanlang"
 
@@ -3447,6 +3483,10 @@ msgstr "quyidagiga teng emas"
 
 #: src/lib/components/shared/customer-selector.tsx
 msgid "Existing customer"
+msgstr ""
+
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx
+msgid "e.g. Size"
 msgstr ""
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx
@@ -3671,6 +3711,10 @@ msgstr "{0, plural, one {{1} ta ombor joylashuvini o'chirib bo'lmadi} other {{2}
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx
 msgid "Facet"
 msgstr "Faset"
+
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
+msgid "Price is required"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -5635,6 +5679,10 @@ msgstr "To'plam tarkibini ko'rish uchun filtrlar qo'shing."
 msgid "Subtotal"
 msgstr "Oraliq jami"
 
+#: src/app/routes/_authenticated/_products/components/option-value-input.tsx
+msgid "Enter value and press Enter"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "is less than"
 msgstr "dan kichik"
@@ -5715,6 +5763,7 @@ msgstr "Fasetni yangilash amalga oshmadi"
 msgid "useWidgetFilters must be used within a WidgetFiltersProvider"
 msgstr "useWidgetFilters WidgetFiltersProvider ichida ishlatilishi kerak"
 
+#: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx
 msgid "Edit Address"
 msgstr "Manzilni tahrirlash"
@@ -5874,6 +5923,7 @@ msgstr "Faol"
 msgid "Tax base"
 msgstr "Soliq asosi"
 
+#: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx
 msgid "Load more"
