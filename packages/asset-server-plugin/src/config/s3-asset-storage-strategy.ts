@@ -45,6 +45,21 @@ export interface S3Config {
      * Using type `any` in order to avoid the need to include `aws-sdk` dependency in general.
      */
     nativeS3UploadConfiguration?: any;
+    /**
+     * @description
+     * An optional prefix which is prepended to the S3 object key of every newly-uploaded asset. This can be used to
+     * "namespace" the assets within a bucket which is shared with other applications, e.g. `keyPrefix: 'my-shop/'`.
+     *
+     * The prefix is used verbatim, so include the trailing slash if you want the assets to live in a "directory".
+     *
+     * Note that the prefix only applies to _new_ uploads: the prefixed key is what gets persisted as the Asset's
+     * `source`/`preview` identifier, and reads & deletes use that stored identifier as-is. Assets which were uploaded
+     * before the prefix was configured therefore keep working unchanged.
+     *
+     * @since 3.8.0
+     * @default undefined
+     */
+    keyPrefix?: string;
 }
 
 /**
@@ -249,7 +264,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
             params: {
                 ...this.s3Config.nativeS3UploadConfiguration,
                 Bucket: this.s3Config.bucket,
-                Key: fileName,
+                Key: `${this.s3Config.keyPrefix || ''}${fileName}`,
                 Body: data,
                 // Extension-driven; safe under the default upload validation which rejects disallowed types.
                 ContentType: mime.lookup(fileName) || 'application/octet-stream',
@@ -275,7 +290,9 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
         const { HeadObjectCommand } = this.AWS;
 
         try {
-            await this.s3Client.send(new HeadObjectCommand(this.getObjectParams(fileName)));
+            await this.s3Client.send(
+                new HeadObjectCommand(this.getObjectParams(`${this.s3Config.keyPrefix || ''}${fileName}`)),
+            );
             return true;
         } catch (err: any) {
             return false;
