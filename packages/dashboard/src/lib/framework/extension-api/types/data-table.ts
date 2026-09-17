@@ -180,11 +180,56 @@ export type BulkActionsInput = BulkAction[] | Array<BulkAction[] | BulkActionGro
 
 /**
  * @description
+ * The context a {@link DashboardDataTableColumnAvailabilityFn} is evaluated in.
+ *
+ * @docsCategory extensions-api
+ * @docsPage DataTables
+ * @since 3.7.4
+ */
+export interface DashboardDataTableColumnAvailabilityContext {
+    /**
+     * @description
+     * The channel currently selected in the channel switcher, or `undefined` while the
+     * channel information is still loading.
+     */
+    activeChannel: { id: string; code: string } | undefined;
+}
+
+/**
+ * @description
+ * Returns whether a column is available at all in the current context. It is called on
+ * every render of the data table, so it must be cheap and must not call hooks.
+ *
+ * @docsCategory extensions-api
+ * @docsPage DataTables
+ * @since 3.7.4
+ */
+export type DashboardDataTableColumnAvailabilityFn = (
+    context: DashboardDataTableColumnAvailabilityContext,
+) => boolean;
+
+/**
+ * @description
  * Allows you to define default view options (currently column visibility and order) for data tables in the dashboard.
  */
 export type DashboardDataTableViewOptionDefaults = {
     columnVisibility?: VisibilityState;
     columnOrder?: ColumnOrderState;
+    /**
+     * @description
+     * Per column, a predicate deciding whether the column exists in the current context.
+     *
+     * This is stronger than `columnVisibility`, which is only a default that the user's own
+     * saved table settings override. A column that is not available is removed from the
+     * table altogether: it is not rendered, it does not appear in the column picker, and it
+     * is not requested from the server — whatever the user has saved.
+     *
+     * Use it for a column that is meaningless rather than merely uninteresting in a given
+     * context, e.g. one that only says something in the default channel.
+     *
+     * @since 3.7.4
+     */
+    columnAvailability?: Record<string, DashboardDataTableColumnAvailabilityFn>;
 };
 
 /**
