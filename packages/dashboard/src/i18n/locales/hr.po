@@ -1749,6 +1749,10 @@ msgstr "Obriši varijantu"
 msgid "No modifications made"
 msgstr "Nisu napravljene izmjene"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "Zadana zona dostave"
@@ -2111,6 +2115,10 @@ msgstr "Odaberite jezik"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "Odjava"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2865,6 +2873,10 @@ msgstr "Jeste li sigurni da želite obrisati ovaj globalni prikaz? Ova radnja se
 msgid "Force remove option group"
 msgstr "Prisilno ukloni grupu opcija"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "Dodano"
@@ -3024,6 +3036,10 @@ msgstr "Povijest narudžbe"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "Premosti"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4278,6 +4294,10 @@ msgstr "Poslano"
 msgid "Entity Information"
 msgstr "Informacije o entitetu"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4499,6 +4519,10 @@ msgstr "Pretvaranje prikaza u globalni nije uspjelo"
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4575,6 +4599,10 @@ msgstr "Uklonjeni kodovi kupona"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "Obriši filter"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"

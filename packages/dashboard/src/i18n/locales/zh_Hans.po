@@ -1749,6 +1749,10 @@ msgstr "删除变体"
 msgid "No modifications made"
 msgstr "未进行修改"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "默认配送区域"
@@ -2111,6 +2115,10 @@ msgstr "选择一种语言"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "退出"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2865,6 +2873,10 @@ msgstr "确定要删除此全局视图吗？此操作无法撤销，将影响所
 msgid "Force remove option group"
 msgstr "强制移除选项组"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "已添加"
@@ -3024,6 +3036,10 @@ msgstr "订单历史"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "覆盖"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4278,6 +4294,10 @@ msgstr "已发货"
 msgid "Entity Information"
 msgstr "实体信息"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4499,6 +4519,10 @@ msgstr "将视图转换为全局失败"
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4575,6 +4599,10 @@ msgstr "已删除优惠券代码"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "清除筛选器"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"

@@ -215,7 +215,9 @@ export function DataTable<TData>({
     const { activeChannel } = useChannel();
     const { pageId } = usePage();
     const savedViewsResult = useSavedViews();
-    const globalViews = pageId && onFilterChange ? savedViewsResult.globalViews : [];
+    const savedViewsEnabled = !!pageId && !!onFilterChange;
+    const globalViews = savedViewsEnabled ? savedViewsResult.globalViews : [];
+    const defaultView = savedViewsEnabled ? savedViewsResult.defaultView : undefined;
     const { t } = useLingui();
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: (page ?? 1) - 1,
@@ -227,6 +229,12 @@ export function DataTable<TData>({
     const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
     const prevSearchTermRef = useRef(searchTerm);
     const prevColumnFiltersRef = useRef(columnFilters);
+
+    // The default saved view is only applied when the table is opened with no filters of its
+    // own, so it never discards filters the user arrived with (from the URL or from their
+    // persisted table settings). Saved views load asynchronously, hence the mount-time capture.
+    const mountedWithoutFiltersRef = useRef((filtersInitialState ?? []).length === 0);
+    const defaultViewAppliedRef = useRef(false);
 
     const componentId = useId();
     const { sensors, localData, handleDragEnd, itemIds } = useDragAndDrop({
@@ -309,6 +317,19 @@ export function DataTable<TData>({
     useEffect(() => {
         onColumnVisibilityChange?.(table, columnVisibility);
     }, [columnVisibility]);
+
+    useEffect(() => {
+        if (defaultViewAppliedRef.current || !mountedWithoutFiltersRef.current) return;
+        if (!defaultView || savedViewsResult.isLoading) return;
+        // The user may have started filtering while the views were still loading.
+        if (columnFilters.length > 0 || searchTerm !== '') return;
+        defaultViewAppliedRef.current = true;
+        setColumnFilters(defaultView.filters);
+        if (defaultView.searchTerm) {
+            setSearchTerm(defaultView.searchTerm);
+            onSearchTermChange?.(defaultView.searchTerm);
+        }
+    }, [defaultView, savedViewsResult.isLoading]);
 
     useEffect(() => {
         if (page && page > 1 && itemsPerPage && prevSearchTermRef.current !== searchTerm) {

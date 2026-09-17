@@ -1737,6 +1737,10 @@ msgstr "변형 삭제"
 msgid "No modifications made"
 msgstr "수정 없음"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "기본 배송 지역"
@@ -2093,6 +2097,10 @@ msgstr "언어 선택"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "로그아웃"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2843,6 +2851,10 @@ msgstr "이 전역 뷰를 삭제하시겠습니까? 이 작업은 취소할 수 
 msgid "Force remove option group"
 msgstr "옵션 그룹 강제 제거"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "추가됨"
@@ -3002,6 +3014,10 @@ msgstr "주문 이력"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "재정의"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4233,6 +4249,10 @@ msgstr "배송됨"
 msgid "Entity Information"
 msgstr "엔티티 정보"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4450,6 +4470,10 @@ msgstr "뷰를 전역으로 변환하는 데 실패했습니다"
 msgid "Select Payment Eligibility Checker"
 msgstr "결제 적격성 확인 선택"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr "하나 이상의 채널을 선택하세요"
@@ -4522,6 +4546,10 @@ msgstr "쿠폰 코드가 제거되었습니다"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "필터 지우기"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"

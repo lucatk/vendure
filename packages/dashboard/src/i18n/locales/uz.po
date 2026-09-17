@@ -1688,6 +1688,10 @@ msgstr "Variantni o'chirish"
 msgid "No modifications made"
 msgstr "Hech qanday o'zgartirish kiritilmadi"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "Standart yetkazib berish hududi"
@@ -2044,6 +2048,10 @@ msgstr "Tilni tanlang"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "Chiqish"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2781,6 +2789,10 @@ msgstr "Ushbu global koʻrinishni oʻchirasizmi? Bu amalni bekor qilib boʻlmayd
 msgid "Force remove option group"
 msgstr "Optsiya guruhini majburan olib tashlash"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "Qoʻshildi"
@@ -2936,6 +2948,10 @@ msgstr "Buyurtma tarixi"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "Bekor qilish"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4146,6 +4162,10 @@ msgstr "Jo'natilgan"
 msgid "Entity Information"
 msgstr "Obyekt ma'lumotlari"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4359,6 +4379,10 @@ msgstr "Ko'rinishni globalga o'tkazib bo'lmadi"
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4431,6 +4455,10 @@ msgstr "Kupon kodlari olib tashlandi"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "Filtrni tozalash"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"
