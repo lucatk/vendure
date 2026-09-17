@@ -5,6 +5,7 @@ import {
 } from '@/vdb/graphql/settings-store-operations.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { SavedView, SavedViewsStore, SaveViewInput, UpdateViewInput } from '@/vdb/types/saved-views.js';
+import { findDefaultSavedView, markDefaultSavedView } from '@/vdb/utils/saved-views-utils.js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ColumnFiltersState } from '@tanstack/react-table';
 
@@ -118,14 +119,18 @@ export function useSavedViews() {
             blockId: blockId === 'default' ? undefined : blockId,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
+            isDefault: input.isDefault,
         };
 
+        const withNewView = (currentViews: SavedView[]) =>
+            input.isDefault
+                ? markDefaultSavedView([...currentViews, newView], newView.id, true)
+                : [...currentViews, newView];
+
         if (input.scope === 'user') {
-            const currentViews = userViewsData || [];
-            await saveUserViewMutation.mutateAsync([...currentViews, newView]);
+            await saveUserViewMutation.mutateAsync(withNewView(userViewsData || []));
         } else {
-            const currentViews = globalViewsData || [];
-            await saveGlobalViewMutation.mutateAsync([...currentViews, newView]);
+            await saveGlobalViewMutation.mutateAsync(withNewView(globalViewsData || []));
         }
 
         return newView;
@@ -138,32 +143,42 @@ export function useSavedViews() {
         const viewInUserViews = userViews.find(v => v.id === input.id);
         const viewInGlobalViews = globalViews.find(v => v.id === input.id);
 
+        const applyUpdate = (views: SavedView[]) => {
+            const updated = views.map(v =>
+                v.id === input.id
+                    ? {
+                          ...v,
+                          name: input.name ?? v.name,
+                          filters: input.filters ?? v.filters,
+                          searchTerm: input.searchTerm !== undefined ? input.searchTerm : v.searchTerm,
+                          updatedAt: new Date().toISOString(),
+                      }
+                    : v,
+            );
+            return input.isDefault === undefined
+                ? updated
+                : markDefaultSavedView(updated, input.id, input.isDefault);
+        };
+
         if (viewInUserViews) {
-            const updatedViews = userViews.map(v =>
-                v.id === input.id
-                    ? {
-                          ...v,
-                          name: input.name ?? v.name,
-                          filters: input.filters ?? v.filters,
-                          searchTerm: input.searchTerm !== undefined ? input.searchTerm : v.searchTerm,
-                          updatedAt: new Date().toISOString(),
-                      }
-                    : v,
-            );
-            await saveUserViewMutation.mutateAsync(updatedViews);
+            await saveUserViewMutation.mutateAsync(applyUpdate(userViews));
         } else if (viewInGlobalViews) {
-            const updatedViews = globalViews.map(v =>
-                v.id === input.id
-                    ? {
-                          ...v,
-                          name: input.name ?? v.name,
-                          filters: input.filters ?? v.filters,
-                          searchTerm: input.searchTerm !== undefined ? input.searchTerm : v.searchTerm,
-                          updatedAt: new Date().toISOString(),
-                      }
-                    : v,
-            );
-            await saveGlobalViewMutation.mutateAsync(updatedViews);
+            await saveGlobalViewMutation.mutateAsync(applyUpdate(globalViews));
+        }
+    };
+
+    /**
+     * Marks a view as the one applied automatically when the table is opened with no active
+     * filters, clearing the flag from any other view in the same scope.
+     */
+    const setDefaultView = async (viewId: string, isDefault: boolean) => {
+        const userViews = userViewsData || [];
+        const globalViews = globalViewsData || [];
+
+        if (userViews.some(v => v.id === viewId)) {
+            await saveUserViewMutation.mutateAsync(markDefaultSavedView(userViews, viewId, isDefault));
+        } else if (globalViews.some(v => v.id === viewId)) {
+            await saveGlobalViewMutation.mutateAsync(markDefaultSavedView(globalViews, viewId, isDefault));
         }
     };
 
@@ -190,6 +205,9 @@ export function useSavedViews() {
                 id: generateId(),
                 name: `${viewToDuplicate.name} (Copy)`,
                 scope: newScope,
+                // A copy never inherits the default flag — that would silently displace
+                // whichever view is currently the default in the target scope.
+                isDefault: false,
                 pageId,
                 blockId: blockId === 'default' ? undefined : blockId,
                 createdAt: new Date().toISOString(),
@@ -227,12 +245,14 @@ export function useSavedViews() {
         savedViewsAreAvailable: settingsStoreIsAvailable,
         userViews: userViewsData || [],
         globalViews: globalViewsData || [],
+        defaultView: findDefaultSavedView(userViewsData || [], globalViewsData || []),
         isLoading: userViewsLoading || globalViewsLoading,
         saveView,
         updateView,
         deleteView,
         duplicateView,
         applyView,
+        setDefaultView,
         canManageGlobalViews,
     };
 }

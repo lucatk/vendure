@@ -1749,6 +1749,10 @@ msgstr "Eliminar variante"
 msgid "No modifications made"
 msgstr "Sin modificaciones realizadas"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "Zona de envío predeterminada"
@@ -2111,6 +2115,10 @@ msgstr "Seleccione un idioma"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "Cerrar sesión"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2865,6 +2873,10 @@ msgstr "¿Está seguro de que desea eliminar esta vista global? Esta acción no 
 msgid "Force remove option group"
 msgstr "Forzar eliminación del grupo de opciones"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "Añadido"
@@ -3024,6 +3036,10 @@ msgstr "Historial de pedidos"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "Sobrescribir"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4278,6 +4294,10 @@ msgstr "Enviado"
 msgid "Entity Information"
 msgstr "Información de Entidad"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4499,6 +4519,10 @@ msgstr "Error al convertir vista a global"
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4575,6 +4599,10 @@ msgstr "Códigos de cupón eliminados"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "Limpiar filtro"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"

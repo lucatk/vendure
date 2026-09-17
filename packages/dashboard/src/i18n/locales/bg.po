@@ -1761,6 +1761,10 @@ msgstr "Изтриване на вариант"
 msgid "No modifications made"
 msgstr "Няма направени модификации"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr ""
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "Зона за доставка по подразбиране"
@@ -2129,6 +2133,10 @@ msgstr "Изберете език"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "Изход"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2882,6 +2890,10 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 msgid "Force remove option group"
 msgstr "Принудително премахване на група опции"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr ""
+
 #~ msgid "Current"
 #~ msgstr "Текущ"
 
@@ -3044,6 +3056,10 @@ msgstr "История на поръчките"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "Презапиши"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4298,6 +4314,10 @@ msgstr "Изпратена"
 msgid "Entity Information"
 msgstr "Информация за обекта"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr ""
+
 #~ msgid "This month"
 #~ msgstr "Този месец"
 
@@ -4522,6 +4542,10 @@ msgstr "Неуспешно преобразуване на изгледа в г�
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr ""
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4601,6 +4625,10 @@ msgstr "Премахнати кодове на купони"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "Изчистване на филтъра"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"

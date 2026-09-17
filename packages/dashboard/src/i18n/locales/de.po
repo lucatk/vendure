@@ -1749,6 +1749,10 @@ msgstr "Variante löschen"
 msgid "No modifications made"
 msgstr "Keine Änderungen vorgenommen"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view cleared"
+msgstr "Standardansicht entfernt"
+
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Default shipping zone"
 msgstr "Standard-Versandzone"
@@ -2111,6 +2115,10 @@ msgstr "Sprache auswählen"
 #: src/lib/components/layout/nav-user.tsx
 msgid "Log out"
 msgstr "Abmelden"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default view set"
+msgstr "Standardansicht festgelegt"
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
@@ -2865,6 +2873,10 @@ msgstr "Möchten Sie diese globale Ansicht wirklich löschen? Diese Aktion kann 
 msgid "Force remove option group"
 msgstr "Optionsgruppe erzwungen entfernen"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Failed to change the default view"
+msgstr "Standardansicht konnte nicht geändert werden"
+
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Added"
 msgstr "Hinzugefügt"
@@ -3024,6 +3036,10 @@ msgstr "Bestellverlauf"
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx
 msgid "Override"
 msgstr "Überschreiben"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Applied automatically when the list is opened without filters"
+msgstr "Wird automatisch angewendet, wenn die Liste ohne Filter geöffnet wird"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx
 #~ msgid "Transaction ID is required"
@@ -4278,6 +4294,10 @@ msgstr "Versandt"
 msgid "Entity Information"
 msgstr "Entitätsinformationen"
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Default"
+msgstr "Standard"
+
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx
 msgid "Order Total"
@@ -4499,6 +4519,10 @@ msgstr "Fehler beim Umwandeln der Ansicht in globale Ansicht"
 msgid "Select Payment Eligibility Checker"
 msgstr ""
 
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Set as default"
+msgstr "Als Standard festlegen"
+
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
 msgstr ""
@@ -4575,6 +4599,10 @@ msgstr "Entfernte Gutscheincodes"
 #: src/lib/components/data-table/data-table-filter-dialog.tsx
 msgid "Clear filter"
 msgstr "Filter löschen"
+
+#: src/lib/components/data-table/views-sheet.tsx
+msgid "Remove as default"
+msgstr "Als Standard entfernen"
 
 #: src/app/routes/_authenticated/_zones/zones.tsx
 msgid "Regions"
