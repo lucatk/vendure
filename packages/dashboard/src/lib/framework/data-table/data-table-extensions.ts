@@ -55,6 +55,8 @@ export function getViewOptionDefaults(
  *   by the **last** plugin to register wins.
  * - `columnOrder`: appended in registration order and de-duplicated, so a
  *   column keeps the position given by the **first** plugin to register it.
+ * - `columnAvailability`: shallow-merged per column, and for a given column the
+ *   predicate supplied by the **last** plugin to register wins.
  */
 export function addViewOptionDefaults(
     pageId: string,
@@ -71,6 +73,10 @@ export function addViewOptionDefaults(
         columnVisibility: {
             ...(existingDefaults?.columnVisibility ?? {}),
             ...(viewOptionDefaults.columnVisibility ?? {}),
+        },
+        columnAvailability: {
+            ...(existingDefaults?.columnAvailability ?? {}),
+            ...(viewOptionDefaults.columnAvailability ?? {}),
         },
     });
 }

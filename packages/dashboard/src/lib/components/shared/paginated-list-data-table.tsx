@@ -513,7 +513,7 @@ export function PaginatedListDataTable<
     const paginatedListObjectPath = getObjectPathToPaginatedList(extendedListQuery);
 
     // Merge code-defined default view options with any view options configured via the Plugin Extension API
-    const { defaultColumnVisibility, defaultColumnOrder } = useViewOptionDefaults(
+    const { defaultColumnVisibility, defaultColumnOrder, unavailableColumns } = useViewOptionDefaults(
         _defaultVisibility,
         _defaultColumnOrder,
     );
@@ -526,6 +526,7 @@ export function PaginatedListDataTable<
         deleteMutation,
         additionalColumns,
         defaultColumnOrder: getStandardizedDefaultColumnOrder(defaultColumnOrder),
+        unavailableColumns,
         includeSelectionColumn,
     });
     const columnVisibility = getColumnVisibility(columns, defaultColumnVisibility, customFieldColumnNames);
