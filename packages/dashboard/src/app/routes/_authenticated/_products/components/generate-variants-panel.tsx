@@ -1,3 +1,4 @@
+import { MoneyInput } from '@/vdb/components/data-input/money-input.js';
 import { ConfirmationDialog } from '@/vdb/components/shared/confirmation-dialog.js';
 import { Button } from '@/vdb/components/ui/button.js';
 import { Checkbox } from '@/vdb/components/ui/checkbox.js';

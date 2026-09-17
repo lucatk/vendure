@@ -14,6 +14,12 @@ export interface SavedView {
     createdAt: string; // ISO timestamp string
     updatedAt: string; // ISO timestamp string
     createdBy?: string;
+    /**
+     * When true, this view is applied automatically when the table is opened with no
+     * active filters. At most one view per scope may be the default; a personal default
+     * takes precedence over the global one.
+     */
+    isDefault?: boolean;
 }
 
 export interface SavedViewsData {
@@ -33,6 +39,7 @@ export interface SaveViewInput {
     filters: ColumnFiltersState;
     columnConfig: ColumnConfig;
     searchTerm?: string;
+    isDefault?: boolean;
 }
 
 export interface UpdateViewInput {
@@ -40,4 +47,5 @@ export interface UpdateViewInput {
     name?: string;
     filters?: ColumnFiltersState;
     searchTerm?: string;
+    isDefault?: boolean;
 }

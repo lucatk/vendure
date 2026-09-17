@@ -101,6 +101,13 @@ function ProductVariantDetailPage() {
         queryFn: () => api.query(stockLocationsQueryDocument, {}),
     });
 
+    // Free-text value per option group (the source of truth for the option comboboxes).
+    // An entry equal to an existing option's name reassigns to it; any other non-empty
+    // value is created as a new option on save.
+    const [optionTextByGroup, setOptionTextByGroup] = useState<Record<string, string>>({});
+    const [duplicateOptionsError, setDuplicateOptionsError] = useState<string | null>(null);
+    const [isSavingOptions, setIsSavingOptions] = useState(false);
+
     // Stock management is removed in this fork, so the form never loads stock levels and
     // this stays undefined — getChangedStockLevels then drops stockLevels from the input.
     const originalStockLevelsRef = useRef<StockLevelInput[] | undefined>(undefined);

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Copy, Edit, Globe, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Copy, Edit, Globe, MoreHorizontal, Star, StarOff, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from '@/vdb/components/ui/sonner.js';
 import { useSavedViews } from '../../hooks/use-saved-views.js';
@@ -32,8 +32,15 @@ interface ViewsSheetProps {
 }
 
 export const ViewsSheet: React.FC<ViewsSheetProps> = ({ open, onOpenChange, type }) => {
-    const { userViews, globalViews, deleteView, updateView, duplicateView, canManageGlobalViews } =
-        useSavedViews();
+    const {
+        userViews,
+        globalViews,
+        deleteView,
+        updateView,
+        duplicateView,
+        setDefaultView,
+        canManageGlobalViews,
+    } = useSavedViews();
     const { handleApplyView } = useDataTableContext();
     const { t } = useLingui();
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -99,6 +106,16 @@ export const ViewsSheet: React.FC<ViewsSheetProps> = ({ open, onOpenChange, type
         } catch (error) {
             const message = isGlobal ? t`Failed to duplicate global view` : t`Failed to duplicate view`;
             toast.error(message);
+        }
+    };
+
+    const handleToggleDefault = async (view: SavedView) => {
+        const makeDefault = !view.isDefault;
+        try {
+            await setDefaultView(view.id, makeDefault);
+            toast.success(makeDefault ? t`Default view set` : t`Default view cleared`);
+        } catch (error) {
+            toast.error(t`Failed to change the default view`);
         }
     };
 
@@ -219,8 +236,17 @@ export const ViewsSheet: React.FC<ViewsSheetProps> = ({ open, onOpenChange, type
                                             </div>
                                         ) : (
                                             <>
-                                                <span className="font-medium text-sm truncate flex-1">
+                                                <span className="font-medium text-sm truncate flex-1 flex items-center gap-1.5">
                                                     {view.name}
+                                                    {view.isDefault && (
+                                                        <span
+                                                            className="flex items-center gap-1 text-xs font-normal text-muted-foreground"
+                                                            title={t`Applied automatically when the list is opened without filters`}
+                                                        >
+                                                            <Star className="h-3 w-3 fill-current" />
+                                                            <Trans>Default</Trans>
+                                                        </span>
+                                                    )}
                                                 </span>
                                                 <div className="flex items-center gap-1">
                                                     <Button size="sm" onClick={() => handleViewApply(view)}>
@@ -237,6 +263,27 @@ export const ViewsSheet: React.FC<ViewsSheetProps> = ({ open, onOpenChange, type
                                                                 <Edit className="h-4 w-4 mr-2" />
                                                                 <Trans>Rename</Trans>
                                                             </DropdownMenuItem>
+                                                            {(!isGlobal || canManageGlobalViews) && (
+                                                                <DropdownMenuItem
+                                                                    onClick={() =>
+                                                                        handleToggleDefault(view)
+                                                                    }
+                                                                >
+                                                                    {view.isDefault ? (
+                                                                        <>
+                                                                            <StarOff className="h-4 w-4 mr-2" />
+                                                                            <Trans>
+                                                                                Remove as default
+                                                                            </Trans>
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <Star className="h-4 w-4 mr-2" />
+                                                                            <Trans>Set as default</Trans>
+                                                                        </>
+                                                                    )}
+                                                                </DropdownMenuItem>
+                                                            )}
                                                             <DropdownMenuItem
                                                                 onClick={() => handleDuplicate(view)}
                                                             >

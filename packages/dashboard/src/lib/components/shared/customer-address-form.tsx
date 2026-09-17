@@ -1,5 +1,5 @@
 import { z, zodResolver } from '@/vdb/lib/zod.js';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '../ui/button.js';
 import { Checkbox } from '../ui/checkbox.js';
@@ -54,6 +54,7 @@ export function CustomerAddressForm<T>({
     hideDefaultAddressFlags = false,
     submitLabel,
 }: CustomerAddressFormProps<T>) {
+    const { t } = useLingui();
     const form = useForm<AddressFormValues>({
         resolver: zodResolver(addressFormSchema),
         defaultValues: {

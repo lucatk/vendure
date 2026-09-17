@@ -11,6 +11,7 @@ import { BulkActionsInput } from '@/vdb/framework/extension-api/types/index.js';
 import { useChannel } from '@/vdb/hooks/use-channel.js';
 import { useDragAndDrop } from '@/vdb/hooks/use-drag-and-drop.js';
 import { usePage } from '@/vdb/hooks/use-page.js';
+import { useSavedViews } from '@/vdb/hooks/use-saved-views.js';
 import { cn } from '@/vdb/lib/utils.js';
 import { closestCenter, DndContext } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -301,6 +302,8 @@ export function DataTable<TData>({
     const [searchTerm, setSearchTerm] = React.useState<string>('');
     const { activeChannel } = useChannel();
     const { pageId } = usePage();
+    const savedViewsResult = useSavedViews();
+    const defaultView = !!pageId && !!onFilterChange ? savedViewsResult.defaultView : undefined;
     const { t } = useLingui();
     const [pagination, setPagination] = React.useState<PaginationState>(() =>
         createPaginationState(page, itemsPerPage),
@@ -370,6 +373,12 @@ export function DataTable<TData>({
         );
     };
 
+    // The default saved view is only applied when the table is opened with no filters of its
+    // own, so it never discards filters the user arrived with (from the URL or from their
+    // persisted table settings). Saved views load asynchronously, hence the mount-time capture.
+    const mountedWithoutFiltersRef = useRef((filtersInitialState ?? []).length === 0);
+    const defaultViewAppliedRef = useRef(false);
+
     const { sensors, localData, handleDragEnd, itemIds } = useDragAndDrop({
         data,
         onReorder,
@@ -429,6 +438,19 @@ export function DataTable<TData>({
     useEffect(() => {
         onColumnVisibilityChange?.(tableRef.current, columnVisibility);
     }, [columnVisibility]);
+
+    useEffect(() => {
+        if (defaultViewAppliedRef.current || !mountedWithoutFiltersRef.current) return;
+        if (!defaultView || savedViewsResult.isLoading) return;
+        // The user may have started filtering while the views were still loading.
+        if (columnFilters.length > 0 || searchTerm !== '') return;
+        defaultViewAppliedRef.current = true;
+        setColumnFilters(defaultView.filters);
+        if (defaultView.searchTerm) {
+            setSearchTerm(defaultView.searchTerm);
+            onSearchTermChange?.(defaultView.searchTerm);
+        }
+    }, [defaultView, savedViewsResult.isLoading]);
 
     useEffect(() => {
         if (page && page > 1 && itemsPerPage && prevSearchTermRef.current !== searchTerm) {
