@@ -69,10 +69,13 @@ export function DataTableProvider({
             onFilterChange(table, filters);
         }
 
-        if (pageId && columnConfig.columnOrder) {
+        // An empty column config means the view carries no column layout of its own, so the
+        // user's existing layout is left alone. Writing the empty value would instead pin the
+        // table to "no columns ordered", discarding the code and extension defaults.
+        if (pageId && columnConfig?.columnOrder?.length) {
             setTableSettings(pageId, 'columnOrder', columnConfig.columnOrder);
         }
-        if (pageId && columnConfig.columnVisibility) {
+        if (pageId && Object.keys(columnConfig?.columnVisibility ?? {}).length) {
             setTableSettings(pageId, 'columnVisibility', columnConfig.columnVisibility);
         }
     };
