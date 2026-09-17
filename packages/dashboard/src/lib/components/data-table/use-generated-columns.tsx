@@ -78,6 +78,7 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
     deleteMutation,
     additionalColumns,
     defaultColumnOrder,
+    unavailableColumns,
     facetedFilters,
     includeSelectionColumn = true,
     includeActionsColumn = true,
@@ -90,6 +91,11 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
     deleteMutation?: TypedDocumentNode<any, any>;
     additionalColumns?: AdditionalColumns<T>;
     defaultColumnOrder?: Array<string | number | symbol>;
+    /**
+     * Ids of columns that must not exist on this table at all. Unlike hiding a column,
+     * this keeps it out of the column picker and out of the generated list query.
+     */
+    unavailableColumns?: string[];
     facetedFilters?: FacetedFilterConfig<T>;
     includeSelectionColumn?: boolean;
     includeActionsColumn?: boolean;
@@ -106,6 +112,11 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
     const { columns, customFieldColumnNames } = useMemo(() => {
         const columnConfigs: Array<{ fieldInfo: FieldInfo; isCustomField: boolean }> = [];
         const customFieldColumnNames: string[] = [];
+        // A column declared unavailable for the current context is dropped rather than
+        // hidden, so it stays out of the column picker and out of the generated query,
+        // and a user's saved column visibility cannot bring it back.
+        const isUnavailable = (columnId: string | undefined) =>
+            columnId != null && (unavailableColumns?.includes(columnId) ?? false);
 
         columnConfigs.push(
             ...fields // Filter out custom fields
@@ -119,7 +130,9 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
             columnConfigs.push(
                 ...customFieldFields.map(field => ({ fieldInfo: field, isCustomField: true })),
             );
-            customFieldColumnNames.push(...customFieldFields.map(field => field.name));
+            customFieldColumnNames.push(
+                ...customFieldFields.map(field => field.name).filter(name => !isUnavailable(name)),
+            );
         }
 
         const queryBasedColumns = columnConfigs.map(({ fieldInfo, isCustomField }) => {
@@ -127,7 +140,7 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
 
             const disabled = customConfig.meta?.disabled ?? false;
 
-            if (disabled) {
+            if (disabled || isUnavailable(fieldInfo.name)) {
                 return null;
             }
 
@@ -178,6 +191,9 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
         for (const [id, column] of Object.entries(additionalColumns ?? {})) {
             if (!id) {
                 throw new Error('Column id is required');
+            }
+            if (isUnavailable(id)) {
+                continue;
             }
             finalColumns.push(columnHelper.accessor(id as any, { enableColumnFilter: false, ...column, id }));
         }
@@ -234,7 +250,18 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
         }
 
         return { columns: finalColumns, customFieldColumnNames };
-    }, [fields, customizeColumns, rowActions, deleteMutation, additionalColumns, defaultColumnOrder]);
+        // `unavailableColumns` is a fresh array on every render, so the memo is keyed on
+        // its contents rather than its identity.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        fields,
+        customizeColumns,
+        rowActions,
+        deleteMutation,
+        additionalColumns,
+        defaultColumnOrder,
+        unavailableColumns?.join(','),
+    ]);
 
     return { columns, customFieldColumnNames };
 }
