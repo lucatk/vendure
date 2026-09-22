@@ -1,4 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/vdb/components/ui/select.js';
+import { useDynamicTranslations } from '@/vdb/hooks/use-dynamic-translations.js';
 import { useLingui } from '@lingui/react/macro';
 import { useEffect, useState } from 'react';
 import { HumanReadableOperator } from '../human-readable-operator.js';
@@ -6,13 +7,24 @@ import { HumanReadableOperator } from '../human-readable-operator.js';
 export interface DataTableEnumFilterProps {
     value: Record<string, any> | undefined;
     options: string[];
+    /**
+     * Name of the GraphQL enum the options belong to, used to look up
+     * `enumValue.<enumType>.<option>` in the translation catalog.
+     */
+    enumType?: string;
     onChange: (filter: Record<string, any>) => void;
 }
 
 export const ENUM_OPERATORS = ['eq', 'notEq', 'isNull'] as const;
 
-export function DataTableEnumFilter({ value: incomingValue, options, onChange }: Readonly<DataTableEnumFilterProps>) {
+export function DataTableEnumFilter({
+    value: incomingValue,
+    options,
+    enumType,
+    onChange,
+}: Readonly<DataTableEnumFilterProps>) {
     const { t } = useLingui();
+    const { getTranslatedEnumValue } = useDynamicTranslations();
     const operatorLabels: Record<string, string> = {
         eq: t`is equal to`,
         notEq: t`is not equal to`,
@@ -62,7 +74,7 @@ export function DataTableEnumFilter({ value: incomingValue, options, onChange }:
             </Select>
             {operator !== 'isNull' && (
                 <Select
-                    items={Object.fromEntries(options.map(o => [o, o]))}
+                    items={Object.fromEntries(options.map(o => [o, getTranslatedEnumValue(enumType, o)]))}
                     value={value}
                     onValueChange={v => {
                         if (v != null) setValue(v);
@@ -74,7 +86,7 @@ export function DataTableEnumFilter({ value: incomingValue, options, onChange }:
                     <SelectContent>
                         {options.map(o => (
                             <SelectItem key={o} value={o}>
-                                {o}
+                                {getTranslatedEnumValue(enumType, o)}
                             </SelectItem>
                         ))}
                     </SelectContent>

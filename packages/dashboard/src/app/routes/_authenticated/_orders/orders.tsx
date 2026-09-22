@@ -28,7 +28,7 @@ function OrderListPage() {
     const serverConfig = useServerConfig();
     const navigate = useNavigate();
     const { t } = useLingui();
-    const { getTranslatedFieldName } = useDynamicTranslations();
+    const { getTranslatedFieldName, getTranslatedOrderState } = useDynamicTranslations();
     const { mutate: createDraftOrder } = useMutation({
         mutationFn: api.mutate(createDraftOrderDocument),
         onSuccess: (result: ResultOf<typeof createDraftOrderDocument>) => {
@@ -116,7 +116,7 @@ function OrderListPage() {
                     options:
                         serverConfig?.orderProcess.map(state => {
                             return {
-                                label: state.name,
+                                label: getTranslatedOrderState(state.name),
                                 value: state.name,
                             };
                         }) ?? [],

@@ -1,3 +1,4 @@
+import { getEnumValues } from '@/vdb/framework/document-introspection/get-document-structure.js';
 import { useDynamicTranslations } from '@/vdb/hooks/use-dynamic-translations.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
 import { Trans } from '@lingui/react/macro';
@@ -20,6 +21,7 @@ export function DataTableFilterBadge({
 }) {
     const { getTranslatedFieldName } = useDynamicTranslations();
     const [operator, value] = Object.entries(filter.value as Record<string, unknown>)[0];
+    const fieldLabel = getTranslatedFieldName(filter.id);
     return (
         <div className="inline-flex items-center h-8 rounded-md border border-input bg-background text-sm">
             <button
@@ -27,8 +29,8 @@ export function DataTableFilterBadge({
                 onClick={() => onClick?.(filter)}
             >
                 <Filter size="12" className="text-muted-foreground flex-shrink-0" />
-                <span className="max-w-[200px] truncate" title={filter.id}>
-                    {getTranslatedFieldName(filter.id)}
+                <span className="max-w-[200px] truncate" title={fieldLabel}>
+                    {fieldLabel}
                 </span>
                 <span className="text-muted-foreground flex-shrink-0">
                     <HumanReadableOperator operator={operator as Operator} mode="short" />
@@ -57,6 +59,7 @@ function FilterValue({
     currencyCode: string;
 }) {
     const { formatDate, formatCurrency } = useLocalFormat();
+    const { getTranslatedEnumValue } = useDynamicTranslations();
     if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         const entries = Object.entries(value as Record<string, unknown>);
         // Range values (start/end from "between" operator) — render inline with en dash
@@ -111,6 +114,11 @@ function FilterValue({
         return <div>{value}</div>;
     }
     if (typeof value === 'string') {
+        // An enum column's filter value is a member of the enum named by `dataType`,
+        // so it has a catalog entry of its own.
+        if (getEnumValues(dataType)?.includes(value)) {
+            return <div>{getTranslatedEnumValue(dataType, value)}</div>;
+        }
         return <div>{value}</div>;
     }
     return <div>{value as string}</div>;
