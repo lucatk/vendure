@@ -4271,6 +4271,21 @@ msgstr "Wird geändert"
 
 #. js-lingui-explicit-id
 #: src/i18n/common-strings.ts
+msgid "enumValue.OrderType.Aggregate"
+msgstr "Sammelbestellung"
+
+#. js-lingui-explicit-id
+#: src/i18n/common-strings.ts
+msgid "enumValue.OrderType.Regular"
+msgstr "Regulär"
+
+#. js-lingui-explicit-id
+#: src/i18n/common-strings.ts
+msgid "enumValue.OrderType.Seller"
+msgstr "Verkäuferbestellung"
+
+#. js-lingui-explicit-id
+#: src/i18n/common-strings.ts
 msgid "orderState.PartiallyDelivered"
 msgstr "Teilweise geliefert"
 

@@ -8,6 +8,7 @@ import {
     DialogTitle,
 } from '@/vdb/components/ui/dialog.js';
 import { getEnumValues } from '@/vdb/framework/document-introspection/get-document-structure.js';
+import { useDynamicTranslations } from '@/vdb/hooks/use-dynamic-translations.js';
 import { Trans } from '@lingui/react/macro';
 import { Column } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
@@ -26,6 +27,7 @@ export interface DataTableFilterDialogProps {
 
 export function DataTableFilterDialog({ column, onEnter }: Readonly<DataTableFilterDialogProps>) {
     const columnFilter = column.getFilterValue() as Record<string, string> | undefined;
+    const { getTranslatedFieldName } = useDynamicTranslations();
     const [filter, setFilter] = useState(columnFilter);
 
     useEffect(() => {
@@ -34,7 +36,10 @@ export function DataTableFilterDialog({ column, onEnter }: Readonly<DataTableFil
 
     const columnDataType = (column.columnDef.meta as any)?.fieldInfo?.type as ColumnDataType;
     const enumValues = getEnumValues(columnDataType);
-    const columnId = column.id;
+    // Holds the *translated* column label. The variable name is the placeholder name in the
+    // `Filter by {columnId}` message id, so it is kept as-is to avoid invalidating every
+    // existing locale's translation of that string.
+    const columnId = getTranslatedFieldName(column.id);
     const isEmpty = !filter || Object.keys(filter).length === 0;
     const setFilterOnColumn = () => {
         column.setFilterValue(filter);
@@ -71,7 +76,12 @@ export function DataTableFilterDialog({ column, onEnter }: Readonly<DataTableFil
             ) : columnDataType === 'Money' ? (
                 <DataTableNumberFilter value={filter} onChange={e => setFilter(e)} mode="money" />
             ) : enumValues ? (
-                <DataTableEnumFilter value={filter} options={enumValues} onChange={e => setFilter(e)} />
+                <DataTableEnumFilter
+                    value={filter}
+                    options={enumValues}
+                    enumType={columnDataType}
+                    onChange={e => setFilter(e)}
+                />
             ) : null}
             <DialogFooter className="sm:justify-end">
                 {columnFilter && (
