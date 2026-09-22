@@ -115,4 +115,11 @@ const commonI18nString = {
         /* i18n*/ 'fieldName.valueList',
         /* i18n*/ 'fieldName.zone',
     ],
+    // Members of a GraphQL enum, keyed `enumValue.<EnumTypeName>.<value>`. Rendered by the
+    // enum filter and the active-filter badge. A plugin may add keys for its own enums.
+    enumValue: [
+        /* i18n*/ 'enumValue.OrderType.Aggregate',
+        /* i18n*/ 'enumValue.OrderType.Regular',
+        /* i18n*/ 'enumValue.OrderType.Seller',
+    ],
 };
