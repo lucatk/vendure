@@ -138,7 +138,13 @@ export class AssetServer {
                         const imageBuffer = await image.toBuffer();
                         const cachedFileName = this.getFileNameFromParameters(req.path, parameters);
                         if (!req.query.cache || req.query.cache === 'true') {
-                            await this.assetStorageStrategy.writeFileFromBuffer(cachedFileName, imageBuffer);
+                            // `cachedFileName` is the identifier the serving path above resolves, so
+                            // it carries the storage key prefix. A write takes a bare file name and
+                            // applies the prefix itself, so it comes back off here.
+                            await this.assetStorageStrategy.writeFileFromBuffer(
+                                this.stripStorageKeyPrefix(cachedFileName),
+                                imageBuffer,
+                            );
                             Logger.debug(`Saved cached asset: ${cachedFileName}`, loggerCtx);
                         }
                         let mimeType = this.getMimeType(cachedFileName);
@@ -255,13 +261,45 @@ export class AssetServer {
         const decodedReqPath = this.sanitizeFilePath(filePath);
         if (imageParamsString !== '') {
             const imageParamHash = this.md5(imageParamsString);
-            return path.posix.join(
+            // The cache key is a *new* object name derived from a stored identifier, so the
+            // storage key prefix comes off the identifier and back on in front of the composed
+            // key: the object a write produces is `<prefix>cache/<name>`, and this is the
+            // identifier which addresses it. The write itself is handed the bare name.
+            return `${this.storageKeyPrefix}${path.posix.join(
                 this.cacheDir,
-                this.addSuffix(decodedReqPath, imageParamHash, imageFormat),
-            );
+                this.addSuffix(this.stripStorageKeyPrefix(decodedReqPath), imageParamHash, imageFormat),
+            )}`;
         } else {
             return decodedReqPath;
         }
+    }
+
+    /**
+     * The prefix which the asset storage strategy prepends to the name of every file it
+     * writes, and which a stored Asset identifier therefore already carries. `''` for a
+     * strategy with no such concept, which makes every use of it below a no-op.
+     */
+    private get storageKeyPrefix(): string {
+        return this.assetStorageStrategy instanceof S3AssetStorageStrategy
+            ? this.assetStorageStrategy.keyPrefix
+            : '';
+    }
+
+    /**
+     * Takes the storage key prefix off an identifier, leaving the bare file name which a
+     * write will prefix again. An identifier stored before the prefix was configured does
+     * not carry it, and is returned unchanged. Both sides of the cache key go through this,
+     * so a prefix which is also a leading substring of a real identifier only reshapes the
+     * cache name — it cannot split the read and write keys apart.
+     */
+    private stripStorageKeyPrefix(identifier: string): string {
+        const prefix = this.storageKeyPrefix;
+        if (!prefix) {
+            return identifier;
+        }
+        const leadingSlash = identifier.startsWith('/') ? '/' : '';
+        const key = identifier.slice(leadingSlash.length);
+        return key.startsWith(prefix) ? `${leadingSlash}${key.slice(prefix.length)}` : identifier;
     }
 
     /**

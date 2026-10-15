@@ -56,6 +56,9 @@ export interface S3Config {
      * `source`/`preview` identifier, and reads & deletes use that stored identifier as-is. Assets which were uploaded
      * before the prefix was configured therefore keep working unchanged.
      *
+     * Transformed images are cached inside the prefix too, at `<prefix>cache/<asset key>`, whether or not the asset
+     * they derive from was uploaded with a prefix.
+     *
      * @default undefined
      */
     keyPrefix?: string;
@@ -176,6 +179,18 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
         private s3Config: S3Config,
         public readonly toAbsoluteUrl: (request: Request, identifier: string) => string,
     ) {}
+
+    /**
+     * @description
+     * The configured {@link S3Config} `keyPrefix`, or `''` when none is set. A stored Asset
+     * identifier already carries this prefix, so anything which derives a *new* object name
+     * from an identifier — the AssetServer's transformed-image cache key — has to take the
+     * prefix off before handing that name to a write, which applies it again. See
+     * `prefixKey` for the two places this strategy applies it.
+     */
+    get keyPrefix(): string {
+        return this.s3Config.keyPrefix || '';
+    }
 
     async init() {
         try {
@@ -349,7 +364,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
      * the prefix was configured resolving.
      */
     private prefixKey(key: string) {
-        return `${this.s3Config.keyPrefix || ''}${key}`;
+        return `${this.keyPrefix}${key}`;
     }
 
     /**
