@@ -47,8 +47,16 @@ export interface S3Config {
     nativeS3UploadConfiguration?: any;
     /**
      * @description
-     * An optional prefix to add to all S3 object keys. This can be used to "namespace" the assets within the bucket.
-     * For example, if your bucket is used for multiple applications, you might want to set a different prefix for each application.
+     * An optional prefix which is prepended to the S3 object key of every newly-uploaded asset. This can be used to
+     * "namespace" the assets within a bucket which is shared with other applications, e.g. `keyPrefix: 'my-shop/'`.
+     *
+     * The prefix is used verbatim, so include the trailing slash if you want the assets to live in a "directory".
+     *
+     * Note that the prefix only applies to _new_ uploads: the prefixed key is what gets persisted as the Asset's
+     * `source`/`preview` identifier, and reads & deletes use that stored identifier as-is. Assets which were uploaded
+     * before the prefix was configured therefore keep working unchanged.
+     *
+     * @default undefined
      */
     keyPrefix?: string;
 }
@@ -297,15 +305,20 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
     async fileExists(fileName: string) {
         const { HeadObjectCommand } = this.AWS;
 
+        // `generateUniqueName` probes a candidate name which has not been written yet, so
+        // unlike `readFile` and `deleteFile` this receives a bare file name rather than a
+        // stored identifier, and has to apply the prefix itself.
+        const identifier = this.prefixKey(fileName);
+
         try {
-            await this.s3Client.send(new HeadObjectCommand(this.getObjectParams(fileName)));
+            await this.s3Client.send(new HeadObjectCommand(this.getObjectParams(identifier)));
             return true;
         } catch (err: any) {
             // Every error means "treat the name as free". A bucket policy without
             // `s3:ListBucket` makes S3 answer 403 rather than 404 for a key that is not
             // there, and `generateUniqueName` in the core AssetService calls this on every
             // upload, so throwing here would fail uploads that used to succeed.
-            const legacyParams = this.getLegacyObjectParams(fileName);
+            const legacyParams = this.getLegacyObjectParams(identifier);
             if (!legacyParams) {
                 return false;
             }
@@ -321,14 +334,19 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
     private getObjectParams(identifier: string) {
         return {
             Bucket: this.s3Config.bucket,
-            Key: this.prefixKey(path.posix.join(identifier.replace(/^\//, ''))),
+            Key: path.posix.join(identifier.replace(/^\//, '')),
         };
     }
 
     /**
-     * `keyPrefix` namespaces every object this strategy touches. It belongs in the two
-     * param builders rather than at each call site, so that read, delete and exists address
-     * the same key the write produced.
+     * `keyPrefix` is applied at the one boundary where a bare file name becomes an object
+     * key: the upload itself, and the `fileExists` probe of a name which has not been
+     * written yet. It is deliberately *not* applied in the param builders below. The key
+     * the upload produces is what `StoredMediaService` persists as the Asset's
+     * `source`/`preview`, so `readFile` and `deleteFile` are handed an identifier which
+     * already carries the prefix — applying it again there would address
+     * `<prefix><prefix><key>`. Leaving them prefix-free also keeps assets uploaded before
+     * the prefix was configured resolving.
      */
     private prefixKey(key: string) {
         return `${this.s3Config.keyPrefix || ''}${key}`;
@@ -339,11 +357,16 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
      * backslashes. An S3 key is an opaque string, so that spelling addresses a different
      * object and has to be named explicitly. Returns undefined when normalization leaves the
      * key unchanged, meaning there is no second object to look for.
+     *
+     * `path.win32.join` rewrites every separator in the identifier, a `keyPrefix` included.
+     * That cannot mis-address a real object: `keyPrefix` and the identifier normalization
+     * which made these legacy keys legacy both arrive in 3.8.0, so no object exists which
+     * was written under a prefix *and* with backslashes.
      */
     private getLegacyObjectParams(identifier: string) {
         const params = {
             Bucket: this.s3Config.bucket,
-            Key: this.prefixKey(path.win32.join(identifier.replace(/^\//, ''))),
+            Key: path.win32.join(identifier.replace(/^\//, '')),
         };
         return params.Key === this.getObjectParams(identifier).Key ? undefined : params;
     }

@@ -65,6 +65,18 @@ describe('S3AssetStorageStrategy', () => {
                 return Promise.reject(new Error(`Unexpected command ${command.constructor.name}`));
             }),
         };
+        // `Upload.done()` resolves with the `Key` it was given, so the identifier the
+        // strategy returns from a write is the key the object actually landed under.
+        (strategy as any).libStorage = {
+            Upload: class {
+                constructor(private config: { params: any }) {}
+                done() {
+                    const { Key, Body } = this.config.params;
+                    bucket.set(Key, String(Body));
+                    return Promise.resolve({ Key });
+                }
+            },
+        };
         return { strategy, bucket };
     }
 
@@ -143,18 +155,65 @@ describe('S3AssetStorageStrategy', () => {
         await expect(strategy.deleteFile('source/ab/image.jpg')).rejects.toThrow('AccessDenied');
     });
 
+    /**
+     * `keyPrefix` is applied exactly once, where a bare file name becomes an object key: the
+     * upload, and the `fileExists` probe of a name not yet written. The key the upload
+     * produces is what `StoredMediaService` persists as the Asset identifier, so the read and
+     * delete paths receive it already prefixed and must pass it through untouched. Prefixing
+     * there as well would address `<prefix><prefix><key>`, so these cases pin both halves:
+     * the two name-shaped entry points prefix, the two identifier-shaped ones do not.
+     */
     describe('keyPrefix', () => {
-        it('writes under the prefixed key', async () => {
+        it('writes under the prefixed key and returns it as the identifier', async () => {
             const { strategy, uploadParams } = createStrategyWithUploadSpy({ keyPrefix: 'shop-a/' });
 
-            await strategy.writeFileFromBuffer('source/ab/image.jpg', Buffer.from(''));
+            const identifier = await strategy.writeFileFromBuffer('source/ab/image.jpg', Buffer.from(''));
 
             expect(uploadParams[0].Key).toBe('shop-a/source/ab/image.jpg');
+            expect(identifier).toBe('shop-a/source/ab/image.jpg');
         });
 
-        it('reads the key it wrote', async () => {
-            const { strategy } = createStrategyWithBucket(
+        it('reads back the identifier a write returned', async () => {
+            const { strategy } = createStrategyWithBucket({}, { keyPrefix: 'shop-a/' });
+
+            const identifier = await strategy.writeFileFromBuffer(
+                'source/ab/image.jpg',
+                Buffer.from('contents'),
+            );
+
+            await expect(strategy.readFileToBuffer(identifier)).resolves.toEqual(Buffer.from('contents'));
+        });
+
+        it('deletes the identifier a write returned', async () => {
+            const { strategy, bucket } = createStrategyWithBucket({}, { keyPrefix: 'shop-a/' });
+
+            const identifier = await strategy.writeFileFromBuffer(
+                'source/ab/image.jpg',
+                Buffer.from('contents'),
+            );
+            await strategy.deleteFile(identifier);
+
+            expect([...bucket.keys()]).toEqual([]);
+        });
+
+        it('leaves a stored identifier unprefixed on read and delete', async () => {
+            const { strategy, bucket } = createStrategyWithBucket(
                 { 'shop-a/source/ab/image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await expect(strategy.readFileToBuffer('shop-a/source/ab/image.jpg')).resolves.toEqual(
+                Buffer.from('contents'),
+            );
+            await strategy.deleteFile('shop-a/source/ab/image.jpg');
+            expect([...bucket.keys()]).toEqual([]);
+        });
+
+        // An asset uploaded before the prefix was configured has a prefix-free identifier,
+        // and has to keep resolving.
+        it('reads an identifier stored before the prefix was configured', async () => {
+            const { strategy } = createStrategyWithBucket(
+                { 'source/ab/image.jpg': 'contents' },
                 { keyPrefix: 'shop-a/' },
             );
 
@@ -163,18 +222,7 @@ describe('S3AssetStorageStrategy', () => {
             );
         });
 
-        it('deletes the prefixed key', async () => {
-            const { strategy, bucket } = createStrategyWithBucket(
-                { 'shop-a/source/ab/image.jpg': 'contents' },
-                { keyPrefix: 'shop-a/' },
-            );
-
-            await strategy.deleteFile('source/ab/image.jpg');
-
-            expect(bucket.has('shop-a/source/ab/image.jpg')).toBe(false);
-        });
-
-        it('finds the prefixed key', async () => {
+        it('probes the prefixed key for a name which has not been written yet', async () => {
             const { strategy } = createStrategyWithBucket(
                 { 'shop-a/source/ab/image.jpg': 'contents' },
                 { keyPrefix: 'shop-a/' },
@@ -190,19 +238,6 @@ describe('S3AssetStorageStrategy', () => {
             );
 
             await expect(strategy.fileExists('source/ab/image.jpg')).resolves.toBe(false);
-        });
-
-        it('prefixes the legacy backslash key too', async () => {
-            const { strategy, bucket } = createStrategyWithBucket(
-                { 'shop-a/source\\ab\\image.jpg': 'contents' },
-                { keyPrefix: 'shop-a/' },
-            );
-
-            await expect(strategy.readFileToBuffer('source/ab/image.jpg')).resolves.toEqual(
-                Buffer.from('contents'),
-            );
-            await strategy.deleteFile('source/ab/image.jpg');
-            expect(bucket.has('shop-a/source\\ab\\image.jpg')).toBe(false);
         });
     });
 });
