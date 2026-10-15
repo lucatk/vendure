@@ -18,8 +18,8 @@ import { createProductVariantsDocument } from '../products.graphql.js';
 import { generateVariantCombinations, OptionGroup } from '../utils/variant-combinations.js';
 import {
     buildCreateVariantInput,
+    useVariantGenerationFormSchema,
     VariantGenerationFieldCells,
-    variantGenerationFormSchema,
     VariantGenerationFormValues,
 } from './variant-generation-fields.js';
 
@@ -52,6 +52,8 @@ export function GenerateVariantsPanel({
     // and let them check only the ones they want; the filter + master toggle
     // above the table make that workflow practical.
     const enableByDefault = variants.length <= 20;
+
+    const variantGenerationFormSchema = useVariantGenerationFormSchema();
 
     const form = useForm<VariantGenerationFormValues>({
         resolver: zodResolver(variantGenerationFormSchema),

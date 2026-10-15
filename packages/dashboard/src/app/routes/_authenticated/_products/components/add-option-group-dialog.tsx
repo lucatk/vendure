@@ -30,7 +30,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { optionGroupListDocument } from '../../_option-groups/option-groups.graphql.js';
 import { addOptionGroupToProductDocument, createProductOptionGroupDocument } from '../products.graphql.js';
-import { OptionGroup, optionGroupSchema, SingleOptionGroupEditor } from './option-groups-editor.js';
+import { OptionGroup, SingleOptionGroupEditor, useOptionGroupSchema } from './option-groups-editor.js';
 
 export function AddOptionGroupDialog({
     productId,
@@ -46,6 +46,8 @@ export function AddOptionGroupDialog({
     const [open, setOpen] = useState(false);
     const [activeTab, setActiveTab] = useState<string>('existing');
     const { t } = useLingui();
+
+    const optionGroupSchema = useOptionGroupSchema();
 
     const form = useForm<OptionGroup>({
         resolver: zodResolver(optionGroupSchema),

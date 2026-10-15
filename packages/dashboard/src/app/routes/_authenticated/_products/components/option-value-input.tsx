@@ -53,7 +53,7 @@ export function OptionValueInput({
                     value={newValue}
                     onChange={e => setNewValue(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Enter value and press Enter"
+                    placeholder={t`Enter value and press Enter`}
                     disabled={disabled}
                     className="flex-1"
                 />

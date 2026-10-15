@@ -27,7 +27,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { Check, Loader2, Plus, Trash2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { AddOptionGroupDialog } from './components/add-option-group-dialog.js';
@@ -67,11 +67,6 @@ export const Route = createFileRoute('/_authenticated/_products/products_/$id_/v
     errorComponent: ({ error }) => <ErrorPage error={error} />,
 });
 
-const addOptionValueSchema = z.object({
-    name: z.string().min(1, 'Option value name is required'),
-});
-
-type AddOptionValueFormValues = z.infer<typeof addOptionValueSchema>;
 type Variant = NonNullable<ResultOf<typeof productDetailWithVariantsDocument>['product']>['variants'][0];
 
 function AddOptionValueDialog({
@@ -86,6 +81,16 @@ function AddOptionValueDialog({
     const [open, setOpen] = useState(false);
     const { t } = useLingui();
     const { activeChannel } = useChannel();
+
+    // Inside the component so the message goes through `t`.
+    const addOptionValueSchema = useMemo(
+        () =>
+            z.object({
+                name: z.string().min(1, t`Option value name is required`),
+            }),
+        [t],
+    );
+    type AddOptionValueFormValues = z.infer<typeof addOptionValueSchema>;
 
     const form = useForm<AddOptionValueFormValues>({
         resolver: zodResolver(addOptionValueSchema),

@@ -5,6 +5,7 @@ import { TableCell } from '@/vdb/components/ui/table.js';
 import { VariablesOf } from '@/vdb/graphql/graphql.js';
 import { z } from '@/vdb/lib/zod.js';
 import { useLingui } from '@lingui/react/macro';
+import { useMemo } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { createProductVariantsDocument } from '../products.graphql.js';
 import { GeneratedVariant } from '../utils/variant-combinations.js';
@@ -12,44 +13,62 @@ import { GeneratedVariant } from '../utils/variant-combinations.js';
 type CreateProductVariantInput = VariablesOf<typeof createProductVariantsDocument>['input'][number];
 type VariantTranslationLanguageCode = NonNullable<CreateProductVariantInput['translations']>[number]['languageCode'];
 
-const variantFieldSchema = z
-    .object({
-        enabled: z.boolean(),
-        sku: z.string(),
-        price: z.string(),
-        stock: z.string(),
-    })
-    .superRefine((data, ctx) => {
-        if (!data.enabled) return;
-        if (!data.sku || data.sku.length === 0) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'SKU is required',
-                path: ['sku'],
-            });
-        }
-        if (data.price !== '' && (Number.isNaN(Number(data.price)) || Number(data.price) < 0)) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'Price must be a non-negative number',
-                path: ['price'],
-            });
-        }
-        const stockNum = Number(data.stock);
-        if (data.stock !== '' && (Number.isNaN(stockNum) || stockNum < 0 || !Number.isInteger(stockNum))) {
-            ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: 'Stock must be a non-negative integer',
-                path: ['stock'],
-            });
-        }
-    });
+/**
+ * The schema is built inside a hook so its validation messages go through `t`.
+ * Both the generation panel and the missing-combinations dialog call this, so the
+ * two keep one definition.
+ */
+export function useVariantGenerationFormSchema() {
+    const { t } = useLingui();
+    return useMemo(
+        () =>
+            z.object({
+                variants: z.record(
+                    z
+                        .object({
+                            enabled: z.boolean(),
+                            sku: z.string(),
+                            price: z.string(),
+                            stock: z.string(),
+                        })
+                        .superRefine((data, ctx) => {
+                            if (!data.enabled) return;
+                            if (!data.sku || data.sku.length === 0) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`SKU is required`,
+                                    path: ['sku'],
+                                });
+                            }
+                            if (
+                                data.price !== '' &&
+                                (Number.isNaN(Number(data.price)) || Number(data.price) < 0)
+                            ) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`Price must be a non-negative number`,
+                                    path: ['price'],
+                                });
+                            }
+                            const stockNum = Number(data.stock);
+                            if (
+                                data.stock !== '' &&
+                                (Number.isNaN(stockNum) || stockNum < 0 || !Number.isInteger(stockNum))
+                            ) {
+                                ctx.addIssue({
+                                    code: z.ZodIssueCode.custom,
+                                    message: t`Stock must be a non-negative integer`,
+                                    path: ['stock'],
+                                });
+                            }
+                        }),
+                ),
+            }),
+        [t],
+    );
+}
 
-export const variantGenerationFormSchema = z.object({
-    variants: z.record(variantFieldSchema),
-});
-
-export type VariantGenerationFormValues = z.infer<typeof variantGenerationFormSchema>;
+export type VariantGenerationFormValues = z.infer<ReturnType<typeof useVariantGenerationFormSchema>>;
 
 /**
  * Maps a single generated combination and its filled-in form fields to a

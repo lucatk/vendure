@@ -25,8 +25,8 @@ import { createProductVariantsDocument } from '../products.graphql.js';
 import { OptionGroup, partitionVariantCombinations } from '../utils/variant-combinations.js';
 import {
     buildCreateVariantInput,
+    useVariantGenerationFormSchema,
     VariantGenerationFieldCells,
-    variantGenerationFormSchema,
     VariantGenerationFormValues,
 } from './variant-generation-fields.js';
 
@@ -116,6 +116,8 @@ function GenerateMissingVariantsForm({
             ),
         [optionGroups, existingVariants],
     );
+
+    const variantGenerationFormSchema = useVariantGenerationFormSchema();
 
     const form = useForm<VariantGenerationFormValues>({
         resolver: zodResolver(variantGenerationFormSchema),
