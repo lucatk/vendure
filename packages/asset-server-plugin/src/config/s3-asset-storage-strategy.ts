@@ -264,7 +264,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
             params: {
                 ...this.s3Config.nativeS3UploadConfiguration,
                 Bucket: this.s3Config.bucket,
-                Key: `${this.s3Config.keyPrefix || ''}${fileName}`,
+                Key: this.prefixKey(fileName),
                 Body: data,
                 // Extension-driven; safe under the default upload validation which rejects disallowed types.
                 ContentType: mime.lookup(fileName) || 'application/octet-stream',
@@ -298,9 +298,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
         const { HeadObjectCommand } = this.AWS;
 
         try {
-            await this.s3Client.send(
-                new HeadObjectCommand(this.getObjectParams(`${this.s3Config.keyPrefix || ''}${fileName}`)),
-            );
+            await this.s3Client.send(new HeadObjectCommand(this.getObjectParams(fileName)));
             return true;
         } catch (err: any) {
             // Every error means "treat the name as free". A bucket policy without
@@ -323,8 +321,17 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
     private getObjectParams(identifier: string) {
         return {
             Bucket: this.s3Config.bucket,
-            Key: path.posix.join(identifier.replace(/^\//, '')),
+            Key: this.prefixKey(path.posix.join(identifier.replace(/^\//, ''))),
         };
+    }
+
+    /**
+     * `keyPrefix` namespaces every object this strategy touches. It belongs in the two
+     * param builders rather than at each call site, so that read, delete and exists address
+     * the same key the write produced.
+     */
+    private prefixKey(key: string) {
+        return `${this.s3Config.keyPrefix || ''}${key}`;
     }
 
     /**
@@ -336,7 +343,7 @@ export class S3AssetStorageStrategy implements AssetStorageStrategy {
     private getLegacyObjectParams(identifier: string) {
         const params = {
             Bucket: this.s3Config.bucket,
-            Key: path.win32.join(identifier.replace(/^\//, '')),
+            Key: this.prefixKey(path.win32.join(identifier.replace(/^\//, ''))),
         };
         return params.Key === this.getObjectParams(identifier).Key ? undefined : params;
     }

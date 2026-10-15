@@ -4,9 +4,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { S3AssetStorageStrategy } from './s3-asset-storage-strategy';
 
 describe('S3AssetStorageStrategy', () => {
-    function createStrategyWithUploadSpy() {
+    function createStrategyWithUploadSpy(extraConfig: Record<string, any> = {}) {
         const uploadParams: any[] = [];
-        const strategy = new S3AssetStorageStrategy({ bucket: 'test', credentials: null as any }, () => '');
+        const strategy = new S3AssetStorageStrategy(
+            { bucket: 'test', credentials: null as any, ...extraConfig },
+            () => '',
+        );
         (strategy as any).libStorage = {
             Upload: class {
                 constructor(config: { params: any }) {
@@ -25,7 +28,7 @@ describe('S3AssetStorageStrategy', () => {
      * containing backslashes is a different object from the same key containing forward
      * slashes, and DeleteObject reports success whether or not the key was there.
      */
-    function createStrategyWithBucket(keys: Record<string, string>) {
+    function createStrategyWithBucket(keys: Record<string, string>, extraConfig: Record<string, any> = {}) {
         const bucket = new Map(Object.entries(keys));
         const notFound = (name: string) =>
             Object.assign(new Error(name), { name, $metadata: { httpStatusCode: 404 } });
@@ -38,7 +41,10 @@ describe('S3AssetStorageStrategy', () => {
         class DeleteObjectCommand {
             constructor(public input: any) {}
         }
-        const strategy = new S3AssetStorageStrategy({ bucket: 'test', credentials: null as any }, () => '');
+        const strategy = new S3AssetStorageStrategy(
+            { bucket: 'test', credentials: null as any, ...extraConfig },
+            () => '',
+        );
         (strategy as any).AWS = { GetObjectCommand, HeadObjectCommand, DeleteObjectCommand };
         (strategy as any).s3Client = {
             send: vi.fn((command: any) => {
@@ -135,5 +141,68 @@ describe('S3AssetStorageStrategy', () => {
         );
 
         await expect(strategy.deleteFile('source/ab/image.jpg')).rejects.toThrow('AccessDenied');
+    });
+
+    describe('keyPrefix', () => {
+        it('writes under the prefixed key', async () => {
+            const { strategy, uploadParams } = createStrategyWithUploadSpy({ keyPrefix: 'shop-a/' });
+
+            await strategy.writeFileFromBuffer('source/ab/image.jpg', Buffer.from(''));
+
+            expect(uploadParams[0].Key).toBe('shop-a/source/ab/image.jpg');
+        });
+
+        it('reads the key it wrote', async () => {
+            const { strategy } = createStrategyWithBucket(
+                { 'shop-a/source/ab/image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await expect(strategy.readFileToBuffer('source/ab/image.jpg')).resolves.toEqual(
+                Buffer.from('contents'),
+            );
+        });
+
+        it('deletes the prefixed key', async () => {
+            const { strategy, bucket } = createStrategyWithBucket(
+                { 'shop-a/source/ab/image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await strategy.deleteFile('source/ab/image.jpg');
+
+            expect(bucket.has('shop-a/source/ab/image.jpg')).toBe(false);
+        });
+
+        it('finds the prefixed key', async () => {
+            const { strategy } = createStrategyWithBucket(
+                { 'shop-a/source/ab/image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await expect(strategy.fileExists('source/ab/image.jpg')).resolves.toBe(true);
+        });
+
+        it('treats a name free in its own prefix as free, whatever another prefix holds', async () => {
+            const { strategy } = createStrategyWithBucket(
+                { 'shop-b/source/ab/image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await expect(strategy.fileExists('source/ab/image.jpg')).resolves.toBe(false);
+        });
+
+        it('prefixes the legacy backslash key too', async () => {
+            const { strategy, bucket } = createStrategyWithBucket(
+                { 'shop-a/source\\ab\\image.jpg': 'contents' },
+                { keyPrefix: 'shop-a/' },
+            );
+
+            await expect(strategy.readFileToBuffer('source/ab/image.jpg')).resolves.toEqual(
+                Buffer.from('contents'),
+            );
+            await strategy.deleteFile('source/ab/image.jpg');
+            expect(bucket.has('shop-a/source\\ab\\image.jpg')).toBe(false);
+        });
     });
 });
