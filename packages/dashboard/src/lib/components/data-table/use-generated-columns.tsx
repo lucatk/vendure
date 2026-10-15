@@ -302,7 +302,6 @@ export function useGeneratedColumns<T extends TypedDocumentNode<any, any>>({
         // reused under another.
         // `unavailableColumns` is a fresh array on every render, so the memo is keyed on
         // its contents rather than its identity.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         fields,
         customizeColumns,
