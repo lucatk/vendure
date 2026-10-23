@@ -57,6 +57,7 @@ export function getViewOptionDefaults(
  *   column keeps the position given by the **first** plugin to register it.
  * - `columnAvailability`: shallow-merged per column, and for a given column the
  *   predicate supplied by the **last** plugin to register wins.
+ * - `sorting`: replaced as a whole; the **last** plugin to register one wins.
  */
 export function addViewOptionDefaults(
     pageId: string,
@@ -78,6 +79,7 @@ export function addViewOptionDefaults(
             ...(existingDefaults?.columnAvailability ?? {}),
             ...(viewOptionDefaults.columnAvailability ?? {}),
         },
+        sorting: viewOptionDefaults.sorting ?? existingDefaults?.sorting,
     });
 }
 
