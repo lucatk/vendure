@@ -1,6 +1,6 @@
 import { DataDisplayComponent } from '@/vdb/framework/component-registry/component-registry.js';
 import { Table } from '@tanstack/react-table';
-import { CellContext, ColumnOrderState, VisibilityState } from '@tanstack/table-core';
+import { CellContext, ColumnOrderState, SortingState, VisibilityState } from '@tanstack/table-core';
 import { DocumentNode } from 'graphql';
 import React from 'react';
 
@@ -230,6 +230,21 @@ export type DashboardDataTableViewOptionDefaults = {
      * @since 3.7.4
      */
     columnAvailability?: Record<string, DashboardDataTableColumnAvailabilityFn>;
+    /**
+     * @description
+     * The sort order the table starts with when none is given, e.g. by the URL of a list
+     * page. It replaces the table's own default sort, so a list of entities with a custom
+     * display order can open sorted by it:
+     *
+     * ```ts
+     * sorting: [{ id: 'displayOrder', desc: false }]
+     * ```
+     *
+     * A sort the user picks in the table still applies as usual.
+     *
+     * @since 3.8.0
+     */
+    sorting?: SortingState;
 };
 
 /**

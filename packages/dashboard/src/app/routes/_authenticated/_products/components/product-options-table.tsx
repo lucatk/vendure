@@ -1,6 +1,7 @@
 import { DetailPageButton } from '@/vdb/components/shared/detail-page-button.js';
 import { PaginatedListDataTable } from '@/vdb/components/shared/paginated-list-data-table.js';
 import { Button } from '@/vdb/components/ui/button.js';
+import { getViewOptionDefaults } from '@/vdb/framework/data-table/data-table-extensions.js';
 import { graphql } from '@/vdb/graphql/graphql.js';
 import { usePage } from '@/vdb/hooks/use-page.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
@@ -47,7 +48,9 @@ export function ProductOptionsTable({
     const { pageId } = usePage();
     const { setTableSettings } = useUserSettings();
 
-    const [sorting, setSorting] = useState<SortingState>([]);
+    const [sorting, setSorting] = useState<SortingState>(() =>
+        pageId ? (getViewOptionDefaults(pageId, 'product-options').sorting ?? []) : [],
+    );
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [filters, setFilters] = useState<ColumnFiltersState>([]);

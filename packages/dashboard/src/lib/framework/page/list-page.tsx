@@ -10,6 +10,7 @@ import {
     PaginatedListRefresherRegisterFn,
     RowAction,
 } from '@/vdb/components/shared/paginated-list-data-table.js';
+import { getViewOptionDefaults } from '@/vdb/framework/data-table/data-table-extensions.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { AnyRoute, AnyRouter, useNavigate } from '@tanstack/react-router';
@@ -597,8 +598,11 @@ export function ListPage<
             };
         });
 
-    if (defaultSort && !sorting.length) {
-        sorting.push(...defaultSort);
+    // A default sort registered through the extension API replaces the page's own.
+    const extensionDefaultSort = pageId ? getViewOptionDefaults(pageId).sorting : undefined;
+    const effectiveDefaultSort = extensionDefaultSort?.length ? extensionDefaultSort : defaultSort;
+    if (effectiveDefaultSort && !sorting.length) {
+        sorting.push(...effectiveDefaultSort);
     }
 
     function sortToString(sortingStates?: SortingState) {
