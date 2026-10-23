@@ -146,7 +146,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     const [status, setStatus] = React.useState<AuthContext['status']>('initial');
     const [authenticationError, setAuthenticationError] = React.useState<string | undefined>();
     const [isLoginLogoutInProgress, setIsLoginLogoutInProgress] = React.useState(false);
-    const { settings, setActiveChannelId } = useUserSettings();
+    const { settings, setActiveChannelId, resyncWithServer } = useUserSettings();
     const queryClient = useQueryClient();
 
     // Query for current user
@@ -194,6 +194,10 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
                 .then(async data => {
                     if (data.login.__typename === 'CurrentUser') {
                         setAuthenticationError(undefined);
+                        // The user settings are stored per user. Hold back saving them until
+                        // this user's saved settings have been fetched (by the invalidation
+                        // below), so the ones loaded before login don't overwrite them.
+                        resyncWithServer();
                         const { data: refetchedData } = await refetchCurrentUser();
                         // Synchronously set the channel token in localStorage before
                         // invalidating queries. This is critical for non-superadmin users
@@ -232,7 +236,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
                     setIsLoginLogoutInProgress(false);
                 });
         },
-        [refetchCurrentUser, queryClient, settings.activeChannelId, setActiveChannelId],
+        [refetchCurrentUser, queryClient, settings.activeChannelId, setActiveChannelId, resyncWithServer],
     );
 
     const logout = React.useCallback(
@@ -269,6 +273,9 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
             }
 
             if (data?.logout.success) {
+                // Stop saving the user settings to the server until the next login has fetched
+                // that user's settings.
+                resyncWithServer();
                 // Clear all cached queries to prevent stale data
                 queryClient.clear();
                 try {
@@ -290,7 +297,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
                 setIsLoginLogoutInProgress(false);
             }
         },
-        [queryClient, isAuthenticated, refetchCurrentUser],
+        [queryClient, isAuthenticated, refetchCurrentUser, resyncWithServer],
     );
 
     // Handle status transitions based on query state

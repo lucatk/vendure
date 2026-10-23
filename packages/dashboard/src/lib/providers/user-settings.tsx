@@ -1,7 +1,7 @@
 import { LS_KEY_USER_SETTINGS } from '@/vdb/constants.js';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { ColumnFiltersState } from '@tanstack/react-table';
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { uiConfig } from 'virtual:vendure-ui-config';
 import { api } from '../graphql/api.js';
 import {
@@ -88,6 +88,16 @@ export interface UserSettingsContextType {
      * seed from the authoritative (server) values rather than the transient local ones.
      */
     settingsReady: boolean;
+    /**
+     * @description
+     * Discards the server-side state the provider has synced against and stops saving to
+     * the server until the settings of the current session have been fetched again. Called
+     * by the auth provider whenever the session changes (login, logout), because the
+     * settings store value is scoped to the logged-in user: without it, the settings of the
+     * previous session (or of nobody, before login) would be written over the new user's
+     * saved settings.
+     */
+    resyncWithServer: () => void;
     settings: UserSettings;
     setDisplayLanguage: (language: string) => void;
     setDisplayLocale: (locale: string | undefined) => void;
@@ -161,18 +171,26 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
     const [settings, setSettings] = useState<UserSettings>(loadSettings);
     const [settingsStoreIsAvailable, setSettingsStoreIsAvailable] = useState<boolean>(true);
     const [serverSettings, setServerSettings] = useState<UserSettings | null>(null);
+    // `isReady`: the settings are in sync with the server value of the current session, so
+    // changes may be saved to the server. `isResolved`: the first load has settled one way or
+    // the other (see `settingsReady`), which is all consumers need to wait for.
     const [isReady, setIsReady] = useState(false);
+    const [isResolved, setIsResolved] = useState(false);
     const previousContentLanguage = useRef(settings.contentLanguage);
     const saveInProgressRef = useRef(false);
+    // Part of the query key, bumped by `resyncWithServer`, so that a response cached for a
+    // previous session can never be mistaken for the current session's settings.
+    const [sessionGeneration, setSessionGeneration] = useState(0);
 
     // Load settings from server on mount
     const {
         data: serverSettingsResponse,
         isSuccess: serverSettingsLoaded,
         isError: serverSettingsErrored,
+        isPlaceholderData,
         error,
     } = useQuery({
-        queryKey: ['user-settings', SETTINGS_STORE_KEY],
+        queryKey: ['user-settings', SETTINGS_STORE_KEY, sessionGeneration],
         queryFn: () => api.query(getSettingsStoreValueDocument, { key: SETTINGS_STORE_KEY }),
         retry: false,
         staleTime: 0,
@@ -211,6 +229,10 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
         if (isReady) {
             return;
         }
+        if (isPlaceholderData) {
+            // The previous session's response, shown while the current one loads.
+            return;
+        }
         if (serverSettingsLoaded) {
             try {
                 const serverSettingsData =
@@ -220,24 +242,33 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                     const mergedSettings = { ...defaultSettings, ...serverSettingsData };
                     setSettings(mergedSettings);
                     setServerSettings(mergedSettings);
-                    setIsReady(true);
                 } else {
                     // Server has no settings, use local settings
                     setServerSettings(settings);
-                    setIsReady(true);
                 }
             } catch (e) {
                 console.error('Failed to parse server settings:', e);
                 setServerSettings(settings);
-                setIsReady(true);
             }
+            setIsReady(true);
+            setIsResolved(true);
         } else if (serverSettingsErrored) {
             // Fetch failed and won't retry (retry: false); fall back to local settings and mark
-            // ready so consumers gating on `settingsReady` don't hang forever.
-            setServerSettings(settings);
-            setIsReady(true);
+            // resolved so consumers gating on `settingsReady` don't hang forever. Do *not* start
+            // saving to the server: the usual cause is that nobody is logged in yet (the provider
+            // mounts on the login page, where the query is FORBIDDEN), and syncing then would
+            // ignore the user's saved settings once they log in and overwrite them with the
+            // local ones. The next successful fetch (after login) initializes from the server.
+            setIsResolved(true);
         }
-    }, [serverSettingsLoaded, serverSettingsErrored, serverSettingsResponse, settings, isReady]);
+    }, [
+        serverSettingsLoaded,
+        serverSettingsErrored,
+        serverSettingsResponse,
+        isPlaceholderData,
+        settings,
+        isReady,
+    ]);
 
     // Save settings to localStorage whenever they change
     useEffect(() => {
@@ -269,6 +300,12 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
         }
     }, [settings.contentLanguage, queryClient]);
 
+    const resyncWithServer = useCallback(() => {
+        setSessionGeneration(generation => generation + 1);
+        setIsReady(false);
+        setServerSettings(null);
+    }, []);
+
     // Settings updaters
     const updateSetting = <K extends keyof UserSettings>(key: K, value: UserSettings[K]) => {
         setSettings(prev => ({ ...prev, [key]: value }));
@@ -276,7 +313,8 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
 
     const contextValue: UserSettingsContextType = {
         settingsStoreIsAvailable,
-        settingsReady: isReady || !settingsStoreIsAvailable,
+        settingsReady: isResolved || !settingsStoreIsAvailable,
+        resyncWithServer,
         settings,
         setDisplayLanguage: language => updateSetting('displayLanguage', language),
         setDisplayLocale: locale => updateSetting('displayLocale', locale),
